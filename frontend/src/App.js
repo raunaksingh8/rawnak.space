@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
-import axios from "axios";
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Home from './pages/Home';
 
 function App() {
-  const [message, setMessage] = useState("");
+    const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/api/test`)
-      .then(res => setMessage(res.data.message));
-  }, []);
-
-  return (
-    <h1>{message}</h1>
-  );
+    return (
+        <BrowserRouter>
+         <ToastContainer position="top-right" autoClose={3000} />
+            <Routes>
+                <Route path='/' element={token ? <Home /> : <Navigate to="/login" />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/signup' element={<Signup />} />
+                <Route path='*' element={<Navigate to="/login" />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
