@@ -23,6 +23,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get("/", (req, resp) => {
+  resp.send("Backend is running");
+});
+
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API is Working" });
+});
+
 app.post("/api/auth/signup", async(req, res) => {
   const { name,email, password } = req.body;
   try {
