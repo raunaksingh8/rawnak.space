@@ -1,13 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import './Signup.css';
 
 function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error] = useState('');
     const navigate = useNavigate();
 
     const handleSignup = async () => {
@@ -19,9 +20,10 @@ function Signup() {
             });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
+            toast.success("Signup Completed ! Please Login");
             navigate('/');
         } catch (err) {
-            setError(err.response.data.message);
+            toast.error(err.response.data.message);
         }
     };
 

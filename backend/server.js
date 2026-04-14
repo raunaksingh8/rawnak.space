@@ -23,14 +23,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.get("/", (req, resp) => {
-  resp.send("Backend is running");
-});
-
-app.get("/api/test", (req, res) => {
-  res.json({ message: "API is Working" });
-});
-
 app.post("/api/auth/signup", async(req, res) => {
   const { name,email, password } = req.body;
   try {
@@ -74,9 +66,6 @@ res.json({token,user:{id:user.id, name:user.name, email:user.email}});
     res.status(500).json({message:"Login Failed"});
     }
 })
-
-
-//Supabase database password - imraunak5577
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
