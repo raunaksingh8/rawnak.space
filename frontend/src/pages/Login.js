@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import './Login.css';
+import '../styles/Login.css';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ function Login() {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
             toast.success("Login Successfull !")
-            navigate('/');
+            navigate('/Dashboard');
         } catch (err) {
             toast.error(err.response.data.message);
         }

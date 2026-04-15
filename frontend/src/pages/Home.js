@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import './Home.css';
+import '../styles/Home.css';
 
 function Home() {
     const user = JSON.parse(localStorage.getItem('user'));

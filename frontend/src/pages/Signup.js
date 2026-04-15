@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import './Signup.css';
+import '../styles/Signup.css';
 
 function Signup() {
     const [name, setName] = useState('');

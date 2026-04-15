@@ -1,0 +1,91 @@
+.dashboard {
+    min-height: 100vh;
+    background: #F3F4F6;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.dash-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dash-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dash-nav-right span {
+    color: #333;
+    font-size: 15px;
+}
+
+.dash-nav-right button {
+    background: #4F46E5;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dash-nav-right button:hover {
+    background: #4338CA;
+}
+
+/* Content */
+.dash-content {
+    padding: 3rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dash-content h1 {
+    font-size: 2rem;
+    color: #1F2937;
+    margin-bottom: 0.5rem;
+}
+
+
+.dash-content p {
+    color: #6B7280;
+    margin-bottom: 2rem;
+}
+
+/* Cards */
+.dash-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.dash-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 220px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.dash-card:hover {
+    transform: translateY(-10px);
+}
+
+.dash-card h3 {
+    color: #4F46E5;
+    margin-bottom: 0.5rem;
+}
+
+.dash-card p {
+    color: #6B7280;
+    font-size: 0.9rem;
+    margin: 0;
+}
