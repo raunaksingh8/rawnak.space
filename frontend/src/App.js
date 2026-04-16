@@ -11,7 +11,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <ToastContainer position="top-right" autoClose={3000} />
+            <ToastContainer position="top-right" autoClose={2000} />
             <Routes>
                 <Route path='/' element={<LandingPage />} />
                 <Route path='/login' element={<Login />} />

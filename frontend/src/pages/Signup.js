@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import '../styles/Signup.css';
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import Loader from "../components/Loader"
 
 function Signup() {
     const [name, setName] = useState('');
@@ -10,8 +12,11 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [error] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSignup = async () => {
+        setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
                 name,
@@ -24,6 +29,8 @@ function Signup() {
             navigate('/');
         } catch (err) {
             toast.error(err.response.data.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -43,13 +50,21 @@ function Signup() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
             />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
-            <button onClick={handleSignup}>Sign Up</button>
+            <div className="password-wrapper">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+
+                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <VscEyeClosed /> : <VscEye />}
+                </span>
+            </div>
+            <button onClick={handleSignup} disabled={loading}>Login
+            </button>
+            {loading && <Loader />}
             <p>
                 Already have an account? <Link to="/login">Login</Link>
             </p>

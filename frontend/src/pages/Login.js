@@ -3,14 +3,19 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import '../styles/Login.css';
+import {VscEye,VscEyeClosed} from "react-icons/vsc";
+import Loader from "../components/Loader"
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async () => {
+        setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
                 email,
@@ -22,6 +27,8 @@ function Login() {
             navigate('/Dashboard');
         } catch (err) {
             toast.error(err.response.data.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -35,13 +42,21 @@ function Login() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
             />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
+            <div className="password-wrapper">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                />
+
+                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <VscEyeClosed /> : <VscEye />}
+                </span>
+            </div>
+            <button onClick={handleLogin} disabled={loading}>Login
+            </button>
+            {loading && <Loader />}
             <p>
                 Don't have an account? <Link to="/signup">Sign up</Link>
             </p>
