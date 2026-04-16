@@ -71,5 +71,8 @@ res.json({token,user:{id:user.id, name:user.name, email:user.email}});
     }
 })
 
+console.time("login");
+// your login logic
+console.timeEnd("login");
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
