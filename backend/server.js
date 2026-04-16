@@ -28,6 +28,7 @@ app.get("/", (req, resp) => {
 });
 
 app.post("/api/auth/signup", async(req, res) => {
+  console.time("signup");
   const { name,email, password } = req.body;
   try {
     // check if user already exists
@@ -44,15 +45,18 @@ app.post("/api/auth/signup", async(req, res) => {
     ); 
     // create token
     const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    console.timeEnd("signup");
     res.json({ token, user: result.rows[0] });
   } catch (err) {
+    console.timeEnd("signup");
     console.error(err);
     res.status(500).json({ message: "Signup Failed" })
   }
 })
 
 app.post("/api/auth/login",async(req,res)=>{
-  const {name, email, password}= req.body;
+   console.time("login");
+  const {email, password}= req.body;
   try{
 const result = await pool.query("Select * from users where email = $1",[email])
 if (result.rows.length === 0){
@@ -64,15 +68,14 @@ if(!isMatch){
   return res.status(400).json({message:"Invalide email id or password"});
 }
 const token = jwt.sign({id:user.id},process.env.JWT_SECRET, {expiresIn: "7d"});
+console.timeEnd("login");
 res.json({token,user:{id:user.id, name:user.name, email:user.email}});
   }catch(err){
     console.error(err);
+    console.timeEnd("login");
     res.status(500).json({message:"Login Failed"});
     }
 })
 
-console.time("login");
-// your login logic
-console.timeEnd("login");
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
