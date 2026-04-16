@@ -14,6 +14,8 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+    console.log(loading);
+
     const handleLogin = async () => {
         setLoading(true);
         try {
