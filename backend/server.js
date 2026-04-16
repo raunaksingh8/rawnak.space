@@ -37,7 +37,7 @@ app.post("/api/auth/signup", async(req, res) => {
       return res.status(400).json({ message: "Email already registered" });
     }
     // hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 8);
     // save user
     const result = await pool.query(
       "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email",
