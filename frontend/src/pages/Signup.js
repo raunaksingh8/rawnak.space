@@ -62,7 +62,7 @@ function Signup() {
                     {showPassword ? <VscEyeClosed /> : <VscEye />}
                 </span>
             </div>
-            <button onClick={handleSignup} disabled={loading}>Login
+            <button onClick={handleSignup} disabled={loading}>Signup
             </button>
             {loading && <Loader />}
             <p>
