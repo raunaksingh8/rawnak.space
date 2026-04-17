@@ -23,9 +23,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.get("/", (req, resp) => {
-  resp.send("Backend is running");
+app.get("/", (req, res) => {
+  res.send("Backend is running");
 });
+
+app.get("/health",(req,res)=>{
+  console.log("Health Check Ping");
+  res.send("Ok");
+})
 
 app.post("/api/auth/signup", async(req, res) => {
   console.time("signup");
