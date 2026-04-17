@@ -15,8 +15,6 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
 
-console.log("DB URL:", process.env.DATABASE_URL);
-
 app.use(morgan("dev"));
 
 app.use(cors({
@@ -39,6 +37,10 @@ app.get("/health",(req,res)=>{
 app.post("/api/auth/signup", async(req, res) => {
   console.time("signup");
   const { name,email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
   try {
     // check if user already exists
     const existing = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -66,6 +68,9 @@ app.post("/api/auth/signup", async(req, res) => {
 app.post("/api/auth/login",async(req,res)=>{
    console.time("login");
   const {email, password}= req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: "No credentials entered" });
+  }
   try{
 const result = await pool.query("Select * from users where email = $1",[email])
 if (result.rows.length === 0){

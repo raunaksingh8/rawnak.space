@@ -16,6 +16,10 @@ function Signup() {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSignup = async () => {
+        if (!name || !email || !password) {
+        toast.error("All fields are required !");
+        return;
+    }
         setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
@@ -26,7 +30,7 @@ function Signup() {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
             toast.success("Signup Completed ! Please Login");
-            navigate('/');
+            navigate('/login');
         } catch (err) {
             toast.error(err.response.data.message);
         } finally {

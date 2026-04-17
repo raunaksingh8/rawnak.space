@@ -18,6 +18,10 @@ function Login({setToken}) {
     console.log("API URL:", process.env.REACT_APP_API_URL);
 
     const handleLogin = async () => {
+        if (!email || !password) {
+        toast.error("Please enter credentials !");
+        return;
+    }
         setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
