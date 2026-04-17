@@ -6,7 +6,7 @@ import '../styles/Login.css';
 import {VscEye,VscEyeClosed} from "react-icons/vsc";
 import Loader from "../components/Loader"
 
-function Login() {
+function Login({setToken}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error] = useState('');
@@ -25,8 +25,9 @@ function Login() {
             });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
+            setToken(res.data.token);
             toast.success("Login Successfull !")
-            navigate('/Dashboard');
+            navigate('/dashboard');
         } catch (err) {
             toast.error(err.response.data.message);
         } finally {
