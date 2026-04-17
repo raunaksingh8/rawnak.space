@@ -6,12 +6,16 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 
-require ("dotenv").config();
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV || "development"}`
+});
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
+
+console.log("DB URL:", process.env.DATABASE_URL);
 
 app.use(morgan("dev"));
 
