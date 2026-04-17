@@ -15,6 +15,7 @@ function Login({setToken}) {
     const [showPassword, setShowPassword] = useState(false);
 
     console.log(loading);
+    console.log("API URL:", process.env.REACT_APP_API_URL);
 
     const handleLogin = async () => {
         setLoading(true);
