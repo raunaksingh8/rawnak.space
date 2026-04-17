@@ -18,7 +18,14 @@ function App() {
 
             <Routes>
 
-                <Route path='/' element={<LandingPage />} />
+                <Route
+                    path="/"
+                    element={
+                        token
+                            ? <Navigate to="/dashboard" />
+                            : <LandingPage />
+                    }
+                />
                 <Route
                     path="/login"
                     element={
@@ -43,7 +50,14 @@ function App() {
                             : <Navigate to="/login" />
                     }
                 />
-                <Route path='*' element={<Navigate to="/" />} />
+                <Route
+                    path="*"
+                    element={
+                        token
+                            ? <Navigate to="/dashboard" />
+                            : <Navigate to="/" />
+                    }
+                />
             </Routes>
         </BrowserRouter>
     );
