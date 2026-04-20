@@ -17,7 +17,7 @@ function Dashboard({setToken}) {
     return (
         <div className="dashboard">
             <nav className="dash-navbar">
-                <div className="logo">MyApp</div>
+                <div className="logo">Orion</div>
                 <div className="dash-nav-right">
                     <span>Hello, {user?.name}</span>
                     <button onClick={handleLogout}>Logout</button>

@@ -5,7 +5,7 @@ function LandingPage() {
     return (
         <div className="landing">
             <nav className="navbar">
-                <div className="logo">MyApp</div>
+                <div className="logo">Orion</div>
                 <div className="nav-links">
                     <Link to="/login" className="btn-signup">Login</Link>
                     <Link to="/signup" className="btn-signup">Sign Up</Link>
@@ -13,8 +13,8 @@ function LandingPage() {
             </nav>
 
             <div className="hero">
-                <h1>Welcome to MyApp</h1>
-                <p>A simple and powerful app to manage your work efficiently.</p>
+                <h1>Welcome to Orion</h1>
+                <p>A simple and powerful app to manage your work efficiently. In Progress..</p>
                 <Link to="/signup" className="btn-get-started">Get Started</Link>
             </div>
         </div>
