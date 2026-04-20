@@ -1,7 +1,8 @@
 .dashboard {
     min-height: 100vh;
-    background: #F3F4F6;
+    background: transparent;
     font-family: 'Segoe UI', sans-serif;
+    background: #EEF2FF;;
 }
 
 /* Navbar */
@@ -10,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: white;
+    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 

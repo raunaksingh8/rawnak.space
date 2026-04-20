@@ -41,6 +41,7 @@ function Login({setToken}) {
     };
 
     return (
+        <div className="loginpage">
         <div className="login-container">
             <h2>Login</h2>
             {error && <p className="error">{error}</p>}
@@ -68,6 +69,8 @@ function Login({setToken}) {
             <p>
                 Don't have an account? <Link to="/signup">Sign up</Link>
             </p>
+            <p className="p1"><Link to="/landingpage">Go Back</Link></p>
+        </div>
         </div>
     );
 }

@@ -1,9 +1,19 @@
+.loginpage {
+    min-height: 100vh;            
+    background: #EEF2FF;
+    display: flex;               
+    justify-content: center;      
+    align-items: center;         
+}
+
 .login-container {
-  max-width: 350px;
-  margin: 100px auto;
-  padding: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.329);
-  border-radius: 14px;
+    max-width: 350px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.329);
+    border-radius: 16px;
+    background: white;
+    backdrop-filter: blur(10px);
 }
 
 .login-container h2 {
@@ -46,6 +56,9 @@
 .login-container p {
   text-align: center;
   margin-top: 1rem;
+}
+.login-container .p1{
+    margin: 0;
 }
 
 .login-container a {

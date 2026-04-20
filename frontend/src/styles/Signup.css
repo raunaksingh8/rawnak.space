@@ -1,9 +1,19 @@
+.signuppage {
+    min-height: 100vh;            
+    background: #EEF2FF;
+    display: flex;               
+    justify-content: center;      
+    align-items: center;         
+}
+
 .signup-container {
     max-width: 350px;
-    margin: 100px auto;
+    width: 100%;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.329);
-    border-radius: 14px;
+    border-radius: 16px;
+    background: white;
+    backdrop-filter: blur(10px);
 }
 
 .signup-container h2 {
@@ -46,6 +56,9 @@
 .signup-container p {
     text-align: center;
     margin-top: 1rem;
+}
+.signup-container .p1{
+    margin: 0;
 }
 
 .signup-container a {

@@ -39,6 +39,7 @@ function Signup() {
     };
 
     return (
+        <div className="signuppage">
         <div className="signup-container">
             <h2>Create Account</h2>
             {error && <p className="error">{error}</p>}
@@ -72,6 +73,8 @@ function Signup() {
             <p>
                 Already have an account? <Link to="/login">Login</Link>
             </p>
+            <p className="p1"><Link to="/landingpage">Go Back</Link></p>
+        </div>
         </div>
     );
 }
