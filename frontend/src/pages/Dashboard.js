@@ -2,15 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../styles/Dashboard.css';
 
-function Dashboard() {
+function Dashboard({setToken}) {
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        setToken(null);
         toast.success("Logged out successfully!");
-        navigate('/');
+        navigate('/landing');
     };
 
     return (

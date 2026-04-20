@@ -46,8 +46,8 @@ function App() {
                     path='/dashboard'
                     element={
                         token
-                            ? <Dashboard />
-                            : <Navigate to="/login" />
+                            ? <Dashboard setToken={setToken}/>
+                            : <Navigate to="/" />
                     }
                 />
                 <Route
