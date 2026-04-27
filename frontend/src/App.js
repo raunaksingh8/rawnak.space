@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
+import { Analytics } from '@vercel/analytics/react';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -59,6 +60,7 @@ function App() {
                     }
                 />
             </Routes>
+            <Analytics/>
         </BrowserRouter>
     );
 }
