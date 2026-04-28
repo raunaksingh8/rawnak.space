@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
+
 
 .landing {
     font-family: 'Segoe UI', sans-serif;
@@ -87,6 +89,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
     padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Card */
@@ -115,7 +119,7 @@
 }
 /* Smooth zoom */
 .card:hover {
-    transform: scale(1.04) translate(-4px);  
+    transform: scale(1.04) translateY(-4px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
