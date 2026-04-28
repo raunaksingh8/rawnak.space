@@ -1,7 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LandingPage.css';
 
 function LandingPage() {
+    const navigate = useNavigate();
+
+    const cards = [
+        { image: "/images/progress.svg", route: "/dashboard" },
+        { image: "/images/lifestats.svg", route: "/users" },
+        { image: "/images/dowrycal.svg", route: "/reports" },
+        { image: "/images/fcbarcelona.svg", route: "/settings" },
+        { image: "/images/moneyspent.svg", route: "/notifications" },
+        { image: "/images/share.svg", route: "/support" }
+    ];
+
     return (
         <div className="landing">
             <nav className="navbar">
@@ -12,10 +23,16 @@ function LandingPage() {
                 </div>
             </nav>
 
-            <div className="hero">
-                <h1>Welcome to Orion</h1>
-                <p>A simple and powerful app to manage your work efficiently. In Progress..</p>
-                <Link to="/signup" className="btn-get-started">Get Started</Link>
+            <div className="card-container">
+                {cards.map((card, index) => (
+                    <div
+                        key={index}
+                        className="card"
+                        onClick={() => navigate(card.route)}
+                    >
+                        <img src={card.image} alt="" />
+                    </div>
+                ))}
             </div>
         </div>
     );

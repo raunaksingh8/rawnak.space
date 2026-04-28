@@ -1,0 +1,59 @@
+<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <defs>
+    <linearGradient id="barcaBg" x1="0" y1="0" x2="800" y2="300">
+      <stop offset="0%" stop-color="#a50044"></stop>
+      <stop offset="100%" stop-color="#004d98"></stop>
+    </linearGradient>
+
+    <!-- Barça stripes -->
+    <pattern id="stripes" width="60" height="300" patternUnits="userSpaceOnUse">
+      <rect width="30" height="300" fill="#004d98" opacity="0.25"></rect>
+    </pattern>
+
+    <!-- pitch -->
+    <linearGradient id="pitch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#14532d"></stop>
+      <stop offset="100%" stop-color="#166534"></stop>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="300" rx="20" fill="url(#barcaBg)"></rect>
+  <rect width="800" height="300" rx="20" fill="url(#stripes)"></rect>
+
+  <!-- Title -->
+  <text x="40" y="80" font-family="Arial" font-size="36" font-weight="700" fill="#f9fafb">
+    FC Barcelona
+  </text>
+
+  <text x="40" y="120" font-family="Arial" font-size="22" fill="#e5e7eb">
+    UCL Timer
+  </text>
+
+  <!-- Subtitle -->
+  <text x="40" y="160" font-family="Arial" font-size="16" fill="#d1d5db">
+    since the last Champions League win
+  </text>
+
+  <!-- Year -->
+  <rect x="40" y="190" width="120" height="45" rx="10" fill="#111827" opacity="0.85"></rect>
+  <text x="100" y="220" text-anchor="middle" font-size="22" fill="#facc15" font-weight="700">
+    2015
+  </text>
+
+  <!-- Pitch -->
+  <g transform="translate(400,70)">
+    <rect width="320" height="160" rx="12" fill="url(#pitch)"></rect>
+
+    <line x1="160" y1="0" x2="160" y2="160" stroke="#bbf7d0" stroke-width="2"></line>
+    <circle cx="160" cy="80" r="30" stroke="#bbf7d0" stroke-width="2" fill="none"></circle>
+
+    <rect x="0" y="40" width="50" height="80" stroke="#bbf7d0" stroke-width="2" fill="none"></rect>
+    <rect x="270" y="40" width="50" height="80" stroke="#bbf7d0" stroke-width="2" fill="none"></rect>
+
+    <rect x="-5" y="65" width="10" height="30" fill="#e5e7eb"></rect>
+    <rect x="315" y="65" width="10" height="30" fill="#e5e7eb"></rect>
+  </g>
+
+</svg>
