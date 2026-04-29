@@ -2,9 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
 }
 
+.body {
+    overflow-x: hidden;
+}
 
 .landing {
     font-family: 'Segoe UI', sans-serif;
@@ -86,7 +88,7 @@
 /* Container */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
     padding: 40px;
     max-width: 1200px;
@@ -95,7 +97,7 @@
 
 /* Card */
 .card {
-    height: 140px;
+    aspect-ratio: 16 / 6;
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
