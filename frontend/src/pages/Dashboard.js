@@ -25,7 +25,7 @@ function Dashboard({setToken}) {
             </nav>
 
             <div className="dash-content">
-                <h1>Welcome back, {user?.name}!</h1>
+                <h1>Welcome back, {user?.name}!!</h1>
                 <p>You are logged in as {user?.email}</p>
 
                 <div className="dash-cards">
