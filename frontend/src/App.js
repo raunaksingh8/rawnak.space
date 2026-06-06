@@ -8,6 +8,12 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
+import Progress from './pages/Progress';
+import LifeStats from './pages/LifeStats';
+import DowryCal from './pages/DowryCal';
+import FcBarcelona from './pages/FcBarcelona';
+import MoneySpent from './pages/MoneySpent';
+import Share from './pages/Share';
 
 function App() {
 
@@ -51,6 +57,12 @@ function App() {
                             : <Navigate to="/" />
                     }
                 />
+                <Route path="/progress" element={<Progress />} />
+                <Route path="/lifestats" element={<LifeStats />} />
+                <Route path="/dowrycal" element={<DowryCal />} />
+                <Route path="/fcbarcelona" element={<FcBarcelona />} />
+                <Route path="/moneyspent" element={<MoneySpent />} />
+                <Route path="/share" element={<Share />} />
                 <Route
                     path="*"
                     element={

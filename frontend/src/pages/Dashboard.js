@@ -11,7 +11,7 @@ function Dashboard({setToken}) {
         localStorage.removeItem('user');
         setToken(null);
         toast.success("Logged out successfully!");
-        navigate('/landing');
+        navigate('/');
     };
 
     return (

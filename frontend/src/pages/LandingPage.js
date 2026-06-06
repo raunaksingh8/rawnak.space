@@ -5,12 +5,12 @@ function LandingPage() {
     const navigate = useNavigate();
 
     const cards = [
-        { image: "/images/progress.svg", route: "/dashboard" },
-        { image: "/images/lifestats.svg", route: "/users" },
-        { image: "/images/dowrycal.svg", route: "/reports" },
-        { image: "/images/fcbarcelona.svg", route: "/settings" },
-        { image: "/images/moneyspent.svg", route: "/notifications" },
-        { image: "/images/share.svg", route: "/support" }
+        { image: "/images/progress.svg", route: "/progress" },
+        { image: "/images/lifestats.svg", route: "/lifestats" },
+        { image: "/images/dowrycal.svg", route: "/dowrycal" },
+        { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
+        { image: "/images/moneyspent.svg", route: "/moneyspent" },
+        { image: "/images/share.svg", route: "/share" }
     ];
 
     return (
