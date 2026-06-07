@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import '../styles/LandingPage.css';
 
 function LandingPage() {
@@ -13,26 +14,38 @@ function LandingPage() {
         { image: "/images/share.svg", route: "/share" }
     ];
 
+    const [isLeaving, setIsLeaving] = useState(false);
+    const [clickedIndex, setClickedIndex] = useState(null);
+
+    const handleCardClick = (route, index) => {
+        if (isLeaving) return;
+        setClickedIndex(index);
+        setIsLeaving(true);
+        setTimeout(() => navigate(route), 380);
+    };
+
     return (
-        <div className="landing">
+        <div className={`landing ${isLeaving ? 'is-leaving' : ''}`}>
             <nav className="navbar">
-                <div className="logo">Orion</div>
+                <div className="logo" aria-hidden="true"></div>
                 <div className="nav-links">
                     <Link to="/login" className="btn-signup">Login</Link>
                     <Link to="/signup" className="btn-signup">Sign Up</Link>
                 </div>
             </nav>
 
-            <div className="card-container">
+            <div className={`landing-intro ${isLeaving ? 'is-leaving' : ''}`}>
+                <div className="card-container">
                 {cards.map((card, index) => (
                     <div
                         key={index}
-                        className="card"
-                        onClick={() => navigate(card.route)}
+                        className={`card ${clickedIndex === index ? 'clicked' : ''}`}
+                        onClick={() => handleCardClick(card.route, index)}
                     >
                         <img src={card.image} alt="" />
                     </div>
                 ))}
+                </div>
             </div>
         </div>
     );
