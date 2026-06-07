@@ -65,8 +65,13 @@ function FcBarcelona() {
     return (
         <div className="barca-page">
             <nav className="barca-navbar">
-                <div className="logo">Orion</div>
-                <Link to="/" className="barca-home">Home</Link>
+                <div className="logo" aria-hidden="true"></div>
+                <Link to="/" className="barca-home" aria-label="Home">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M3 11.5L12 4l9 7.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M9 21V12h6v9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </Link>
             </nav>
 
             <main className="barca-content">

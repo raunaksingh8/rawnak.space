@@ -1,0 +1,22 @@
+Error ensuring tables error: duplicate key value violates unique constraint "pg_class_relname_nsp_index"
+    at D:\fullstack\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async ensureTables (D:\fullstack\backend\server.js:30:3) {
+  length: 267,
+  severity: 'ERROR',
+  code: '23505',
+  detail: 'Key (relname, relnamespace)=(dowry_submissions_id_seq, 2200) already exists.',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'pg_catalog',
+  table: 'pg_class',
+  column: undefined,
+  dataType: undefined,
+  constraint: 'pg_class_relname_nsp_index',
+  file: 'nbtinsert.c',
+  line: '673',
+  routine: '_bt_check_unique'
+}

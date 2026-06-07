@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -10,10 +10,33 @@ import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import Progress from './pages/Progress';
 import LifeStats from './pages/LifeStats';
-import DowryCal from './pages/DowryCal';
+import DowryForm from './pages/DowryForm';
 import FcBarcelona from './pages/FcBarcelona';
 import MoneySpent from './pages/MoneySpent';
 import Share from './pages/Share';
+
+function RouteTitleUpdater() {
+    const location = useLocation();
+
+    useEffect(() => {
+        const routeTitles = {
+            '/': 'Home',
+            '/login': 'Login',
+            '/signup': 'Sign Up',
+            '/dashboard': 'Dashboard',
+            '/progress': 'Progress',
+            '/lifestats': 'Life Stats',
+            '/dowrycal': 'Dowry Calculator',
+            '/fcbarcelona': 'FC Barcelona',
+            '/moneyspent': 'Money Spent',
+            '/share': 'Share'
+        };
+
+        document.title = routeTitles[location.pathname] || 'Fullstack';
+    }, [location.pathname]);
+
+    return null;
+}
 
 function App() {
 
@@ -21,6 +44,7 @@ function App() {
 
     return (
         <BrowserRouter>
+            <RouteTitleUpdater />
             <ToastContainer position="top-right" autoClose={2000} />
 
             <Routes>
@@ -59,7 +83,7 @@ function App() {
                 />
                 <Route path="/progress" element={<Progress />} />
                 <Route path="/lifestats" element={<LifeStats />} />
-                <Route path="/dowrycal" element={<DowryCal />} />
+                <Route path="/dowrycal" element={<DowryForm />} />
                 <Route path="/fcbarcelona" element={<FcBarcelona />} />
                 <Route path="/moneyspent" element={<MoneySpent />} />
                 <Route path="/share" element={<Share />} />

@@ -10,9 +10,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    box-shadow: none;
 }
 
 .dash-nav-right {
