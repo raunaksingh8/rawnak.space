@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/LandingPage.css';
 
 function LandingPage() {
@@ -17,6 +17,12 @@ function LandingPage() {
     const [isLeaving, setIsLeaving] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
 
+    useEffect(() => {
+        document.querySelectorAll('.emoji-border').forEach(el => {
+            el.textContent = '🌻'.repeat(500);
+        });
+    }, []);
+
     const handleCardClick = (route, index) => {
         if (isLeaving) return;
         setClickedIndex(index);
@@ -26,6 +32,11 @@ function LandingPage() {
 
     return (
         <div className={`landing ${isLeaving ? 'is-leaving' : ''}`}>
+            <div className="emoji-border top"></div>
+            <div className="emoji-border bottom"></div>
+            <div className="emoji-border left"></div>
+            <div className="emoji-border right"></div>
+
             <nav className="navbar">
                 <div className="logo" aria-hidden="true"></div>
                 <div className="nav-links">
@@ -36,15 +47,15 @@ function LandingPage() {
 
             <div className={`landing-intro ${isLeaving ? 'is-leaving' : ''}`}>
                 <div className="card-container">
-                {cards.map((card, index) => (
-                    <div
-                        key={index}
-                        className={`card ${clickedIndex === index ? 'clicked' : ''}`}
-                        onClick={() => handleCardClick(card.route, index)}
-                    >
-                        <img src={card.image} alt="" />
-                    </div>
-                ))}
+                    {cards.map((card, index) => (
+                        <div
+                            key={index}
+                            className={`card ${clickedIndex === index ? 'clicked' : ''}`}
+                            onClick={() => handleCardClick(card.route, index)}
+                        >
+                            <img src={card.image} alt="" />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

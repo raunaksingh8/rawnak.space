@@ -1,37 +1,38 @@
-<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1200 525" xmlns="http://www.w3.org/2000/svg" width="1200" height="525">
+  <rect width="1200" height="525" fill="#ffffff"/>
 
-  <!-- Background -->
-  <rect width="800" height="300" rx="20" fill="#ffffff"></rect>
+  <!-- Decorative shapes right side -->
+  <circle cx="950" cy="120" r="90" fill="#f472b6" opacity="0.85"/>
+  <rect x="1020" y="200" width="120" height="120" rx="22" fill="#34d399" opacity="0.85"/>
+  <circle cx="1100" cy="400" r="75" fill="#60a5fa" opacity="0.85"/>
 
-  <!-- Funky shapes -->
-  <circle cx="100" cy="60" r="50" fill="#f472b6" opacity="0.8"></circle>
-  <circle cx="700" cy="240" r="60" fill="#60a5fa" opacity="0.8"></circle>
-  <rect x="650" y="40" width="80" height="80" rx="20" fill="#34d399" opacity="0.7" transform="rotate(20 650 40)"></rect>
+  <!-- Decorative curve + arrow -->
+  <path d="M 700 300 Q 820 200 900 320" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="895,310 920,330 900,350" fill="#1a1a1a"/>
 
-  <!-- Zig-zag -->
-  <polyline points="0,250 80,230 160,260 240,220 320,250 400,230" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"></polyline>
+  <!-- Dot accents -->
+  <circle cx="780" cy="200" r="7" fill="#1a1a1a"/>
+  <circle cx="810" cy="180" r="5" fill="#1a1a1a" opacity="0.5"/>
+  <circle cx="840" cy="165" r="4" fill="#1a1a1a" opacity="0.3"/>
 
   <!-- Title -->
-  <text x="40" y="110" font-family="Arial" font-size="48" font-weight="800" fill="#111">
-    Share This Page
-  </text>
+  <text x="60" y="200" font-family="Segoe UI, sans-serif" font-size="80" font-weight="700" fill="#1a1a1a">Share This Page</text>
+  <text x="62" y="255" font-family="Segoe UI, sans-serif" font-size="28" fill="#666">go on... make it viral 📣</text>
 
-  <!-- Subtitle -->
-  <text x="40" y="150" font-family="Arial" font-size="18" fill="#6b7280">
-    go on... make it viral 🚀
-  </text>
+  <!-- Bottom line graph -->
+  <polyline points="60,420 200,400 340,415 480,385 560,395 650,370"
+    fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Funky arrow -->
-  <g transform="translate(520,110)">
-    <path d="M0 40 Q40 0 80 40 T160 40" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"></path>
-    <polygon points="150,30 180,40 150,50" fill="#111"></polygon>
-  </g>
+  <!-- Share icons row -->
+  <circle cx="80" cy="480" r="22" fill="#1877f2"/>
+  <text x="80" y="488" font-family="Segoe UI, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">f</text>
 
-  <!-- Dots -->
-  <g fill="#111">
-    <circle cx="600" cy="70" r="4"></circle>
-    <circle cx="620" cy="90" r="4"></circle>
-    <circle cx="640" cy="70" r="4"></circle>
-  </g>
+  <circle cx="140" cy="480" r="22" fill="#1da1f2"/>
+  <text x="140" y="488" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">t</text>
 
+  <circle cx="200" cy="480" r="22" fill="#25d366"/>
+  <text x="200" y="489" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">W</text>
+
+  <circle cx="260" cy="480" r="22" fill="#0077b5"/>
+  <text x="260" y="489" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">in</text>
 </svg>
