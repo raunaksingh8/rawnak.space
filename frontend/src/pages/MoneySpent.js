@@ -137,7 +137,7 @@ function MoneyRow({ entry, customRate, onCustomRateChange }) {
 }
 
 function MoneySpent() {
-  const [customRate, setCustomRate] = useState(300);
+  const [customRate, setCustomRate] = useState('');
 
   return (
     <div className="pm-root">
