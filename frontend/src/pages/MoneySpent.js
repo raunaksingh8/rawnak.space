@@ -5,13 +5,14 @@ const ENTRIES = [
   { id: 'teacher-india', label: 'Teacher', rate: 300 },
   { id: 'software-engineer-india', label: 'Software Engineer', rate: 600 },
   { id: 'doctor-india', label: 'Doctor', rate: 1000 },
+  { id: 'custom', label: 'Your Income', rate: null, custom: true },
   { id: 'virat-kohli', label: 'Virat Kohli', rate: 250000 },
   { id: 'shah-rukh-khan', label: 'Shah Rukh Khan', rate: 300000 },
   { id: 'lionel-messi', label: 'Lionel Messi', rate: 1300000 },
   { id: 'gautam-adani', label: 'Gautam Adani', rate: 40000000 },
   { id: 'mukesh-ambani', label: 'Mukesh Ambani', rate: 80000000 },
   { id: 'india-military-expenditure', label: 'India Military Expenditure', rate: 890000000 },
-  { id: 'custom', label: 'Your Income', rate: null, custom: true },
+  
 ];
 
 const BILL_VALUE = 500;
