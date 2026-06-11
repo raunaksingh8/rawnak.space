@@ -1,7 +1,3 @@
-/* ───────────────────────────────────────────────
-   Life Stats – Neal.fun-inspired storytelling
-   ─────────────────────────────────────────────── */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
 
 /* ── base ── */
@@ -9,6 +5,14 @@
     width: 100%;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+}
+
+.lifestat-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    box-shadow: none;
 }
 
 /* ── stat section ── */
@@ -37,7 +41,7 @@
     opacity: 0;
     transform: translateY(60px) scale(0.96);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ls-reveal.is-visible {
@@ -50,28 +54,28 @@
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ls-reveal .ls-stat-title {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ls-reveal .ls-stat-desc {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ls-reveal .ls-visual {
     opacity: 0;
     transform: scale(0.85);
     transition: opacity 0.7s 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.7s 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 0.7s 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ls-reveal.is-visible .ls-stat-number,
@@ -138,11 +142,11 @@
 }
 
 .ls-hero-section .ls-stat-title {
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .ls-hero-section .ls-stat-desc {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .ls-hero-section .ls-stat-number .ls-number-highlight {
@@ -156,14 +160,21 @@
     width: 180px;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     margin-bottom: 2.5rem;
     animation: lsCalFloat 4s ease-in-out infinite;
 }
 
 @keyframes lsCalFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-12px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
 }
 
 .ls-cal-header {
@@ -208,10 +219,23 @@
 }
 
 @keyframes lsHeartPulse {
-    0%, 100% { transform: scale(1); }
-    15%      { transform: scale(1.15); }
-    30%      { transform: scale(1); }
-    45%      { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.15);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
 }
 
 .ls-ecg-line {
@@ -235,7 +259,9 @@
 }
 
 @keyframes lsEcgDraw {
-    to { stroke-dashoffset: 0; }
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
 /* ── Blood visual ── */
@@ -260,13 +286,20 @@
     left: 28%;
     width: 20px;
     height: 20px;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
 }
 
 @keyframes lsBloodDrip {
-    0%, 100% { transform: translateY(0) scaleX(1); }
-    50%      { transform: translateY(-15px) scaleX(0.95); }
+
+    0%,
+    100% {
+        transform: translateY(0) scaleX(1);
+    }
+
+    50% {
+        transform: translateY(-15px) scaleX(0.95);
+    }
 }
 
 .ls-blood-ripple {
@@ -277,13 +310,22 @@
     width: 120px;
     height: 30px;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(239,68,68,0.2), transparent 70%);
+    background: radial-gradient(ellipse, rgba(239, 68, 68, 0.2), transparent 70%);
     animation: lsRipple 3s ease-in-out infinite;
 }
 
 @keyframes lsRipple {
-    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
-    50%      { transform: translateX(-50%) scale(1.4); opacity: 0.2; }
+
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateX(-50%) scale(1.4);
+        opacity: 0.2;
+    }
 }
 
 /* ── Breath / lungs visual ── */
@@ -311,8 +353,17 @@
 }
 
 @keyframes lsLungBreathe {
-    0%, 100% { transform: scaleY(0.85) scaleX(0.9); opacity: 0.7; }
-    50%      { transform: scaleY(1.05) scaleX(1.05); opacity: 1; }
+
+    0%,
+    100% {
+        transform: scaleY(0.85) scaleX(0.9);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scaleY(1.05) scaleX(1.05);
+        opacity: 1;
+    }
 }
 
 .ls-air-particles {
@@ -331,16 +382,45 @@
     animation: lsAirFloat 3s ease-in-out infinite;
 }
 
-.ls-air-dot:nth-child(1) { left: -20px; animation-delay: 0s; }
-.ls-air-dot:nth-child(2) { left: 0px;   animation-delay: 0.5s; }
-.ls-air-dot:nth-child(3) { left: 20px;  animation-delay: 1s; }
-.ls-air-dot:nth-child(4) { left: -10px; animation-delay: 1.5s; }
-.ls-air-dot:nth-child(5) { left: 10px;  animation-delay: 2s; }
+.ls-air-dot:nth-child(1) {
+    left: -20px;
+    animation-delay: 0s;
+}
+
+.ls-air-dot:nth-child(2) {
+    left: 0px;
+    animation-delay: 0.5s;
+}
+
+.ls-air-dot:nth-child(3) {
+    left: 20px;
+    animation-delay: 1s;
+}
+
+.ls-air-dot:nth-child(4) {
+    left: -10px;
+    animation-delay: 1.5s;
+}
+
+.ls-air-dot:nth-child(5) {
+    left: 10px;
+    animation-delay: 2s;
+}
 
 @keyframes lsAirFloat {
-    0%   { transform: translateY(0); opacity: 0; }
-    30%  { opacity: 1; }
-    100% { transform: translateY(80px); opacity: 0; }
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(80px);
+        opacity: 0;
+    }
 }
 
 /* ── Space / orbit visual ── */
@@ -349,11 +429,11 @@
 }
 
 .ls-space-section .ls-stat-title {
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 .ls-space-section .ls-stat-desc {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .ls-space-section .ls-stat-number .ls-number-highlight {
@@ -370,7 +450,7 @@
 .ls-orbit-ring {
     width: 240px;
     height: 240px;
-    border: 2px dashed rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     position: relative;
     animation: lsOrbitSpin 20s linear infinite;
@@ -386,13 +466,20 @@
     border-radius: 50%;
     background: radial-gradient(circle, #fde68a 0%, #f59e0b 50%, #d97706 100%);
     box-shadow: 0 0 40px rgba(251, 191, 36, 0.6),
-                0 0 80px rgba(251, 191, 36, 0.3);
+        0 0 80px rgba(251, 191, 36, 0.3);
     animation: lsSunGlow 3s ease-in-out infinite;
 }
 
 @keyframes lsSunGlow {
-    0%, 100% { box-shadow: 0 0 40px rgba(251,191,36,0.6), 0 0 80px rgba(251,191,36,0.3); }
-    50%      { box-shadow: 0 0 60px rgba(251,191,36,0.8), 0 0 100px rgba(251,191,36,0.4); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 40px rgba(251, 191, 36, 0.6), 0 0 80px rgba(251, 191, 36, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 60px rgba(251, 191, 36, 0.8), 0 0 100px rgba(251, 191, 36, 0.4);
+    }
 }
 
 .ls-orbit-earth {
@@ -408,7 +495,9 @@
 }
 
 @keyframes lsOrbitSpin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Earth rotations visual ── */
@@ -420,11 +509,11 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: 
-        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    background:
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
         linear-gradient(135deg, #2563eb 0%, #1d4ed8 30%, #16a34a 31%, #16a34a 40%, #2563eb 41%, #1e40af 100%);
-    box-shadow: 
-        inset -20px -10px 40px rgba(0,0,0,0.3),
+    box-shadow:
+        inset -20px -10px 40px rgba(0, 0, 0, 0.3),
         0 0 50px rgba(37, 99, 235, 0.3);
     animation: lsEarthRotate 8s linear infinite;
     overflow: hidden;
@@ -443,7 +532,9 @@
 }
 
 @keyframes lsEarthRotate {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .ls-earth-atmosphere {
@@ -455,8 +546,17 @@
 }
 
 @keyframes lsAtmosphere {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50%      { transform: scale(1.05); opacity: 1; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
 }
 
 /* ── Moon visual ── */
@@ -467,7 +567,7 @@
 .ls-moon-orbit-ring {
     width: 220px;
     height: 220px;
-    border: 1.5px dashed rgba(150,150,170,0.3);
+    border: 1.5px dashed rgba(150, 150, 170, 0.3);
     border-radius: 50%;
     position: relative;
     animation: lsMoonOrbit 6s linear infinite;
@@ -494,11 +594,13 @@
     height: 28px;
     border-radius: 50%;
     background: radial-gradient(circle at 40% 35%, #e5e7eb, #9ca3af);
-    box-shadow: inset -4px -3px 6px rgba(0,0,0,0.2), 0 0 15px rgba(156,163,175,0.3);
+    box-shadow: inset -4px -3px 6px rgba(0, 0, 0, 0.2), 0 0 15px rgba(156, 163, 175, 0.3);
 }
 
 @keyframes lsMoonOrbit {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Moon craters ── */
@@ -510,8 +612,8 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(0,0,0,0.08);
-    box-shadow: 8px 4px 0 3px rgba(0,0,0,0.06), 3px 10px 0 2px rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.08);
+    box-shadow: 8px 4px 0 3px rgba(0, 0, 0, 0.06), 3px 10px 0 2px rgba(0, 0, 0, 0.05);
 }
 
 /* ── Blinks visual ── */
@@ -561,12 +663,21 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.6);
 }
 
 @keyframes lsBlink {
-    0%, 18%, 22%, 100% { transform: scaleY(1); }
-    20%                { transform: scaleY(0.05); }
+
+    0%,
+    18%,
+    22%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.05);
+    }
 }
 
 /* ── Sleep visual ── */
@@ -575,11 +686,11 @@
 }
 
 .ls-sleep-section .ls-stat-title {
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 .ls-sleep-section .ls-stat-desc {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .ls-sleep-section .ls-stat-number .ls-number-highlight {
@@ -604,8 +715,15 @@
 }
 
 @keyframes lsMoonRock {
-    0%, 100% { transform: rotate(-5deg); }
-    50%      { transform: rotate(5deg); }
+
+    0%,
+    100% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
 }
 
 .ls-zzz {
@@ -637,8 +755,17 @@
 }
 
 @keyframes lsZzz {
-    0%, 100% { opacity: 0.3; transform: translateY(0); }
-    50%      { opacity: 1; transform: translateY(-10px); }
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
 }
 
 /* ── Food visual ── */
@@ -656,16 +783,40 @@
     animation: lsFoodBounce 2s ease-in-out infinite;
 }
 
-.ls-food-item:nth-child(1) { animation-delay: 0s; }
-.ls-food-item:nth-child(2) { animation-delay: 0.2s; }
-.ls-food-item:nth-child(3) { animation-delay: 0.4s; }
-.ls-food-item:nth-child(4) { animation-delay: 0.6s; }
-.ls-food-item:nth-child(5) { animation-delay: 0.8s; }
-.ls-food-item:nth-child(6) { animation-delay: 1.0s; }
+.ls-food-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.ls-food-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ls-food-item:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.ls-food-item:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.ls-food-item:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.ls-food-item:nth-child(6) {
+    animation-delay: 1.0s;
+}
 
 @keyframes lsFoodBounce {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-12px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
 }
 
 /* ── Water visual ── */
@@ -705,18 +856,32 @@
     left: -10%;
     width: 120%;
     height: 12px;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.3) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
     animation: lsWaveSway 2s ease-in-out infinite;
 }
 
 @keyframes lsWaterWave {
-    0%, 100% { height: 70%; }
-    50%      { height: 80%; }
+
+    0%,
+    100% {
+        height: 70%;
+    }
+
+    50% {
+        height: 80%;
+    }
 }
 
 @keyframes lsWaveSway {
-    0%, 100% { transform: translateX(-5%); }
-    50%      { transform: translateX(5%); }
+
+    0%,
+    100% {
+        transform: translateX(-5%);
+    }
+
+    50% {
+        transform: translateX(5%);
+    }
 }
 
 .ls-water-drops {
@@ -736,14 +901,35 @@
     opacity: 0;
 }
 
-.ls-water-drop:nth-child(1) { left: -5px; animation-delay: 0s; }
-.ls-water-drop:nth-child(2) { left: 10px; animation-delay: 0.6s; }
-.ls-water-drop:nth-child(3) { left: 25px; animation-delay: 1.2s; }
+.ls-water-drop:nth-child(1) {
+    left: -5px;
+    animation-delay: 0s;
+}
+
+.ls-water-drop:nth-child(2) {
+    left: 10px;
+    animation-delay: 0.6s;
+}
+
+.ls-water-drop:nth-child(3) {
+    left: 25px;
+    animation-delay: 1.2s;
+}
 
 @keyframes lsDropFall {
-    0%   { transform: translateY(0); opacity: 0; }
-    20%  { opacity: 1; }
-    100% { transform: translateY(50px); opacity: 0; }
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
 }
 
 /* ── Steps / walking visual ── */
@@ -760,15 +946,40 @@
     animation: lsStepAppear 2s ease-in-out infinite;
 }
 
-.ls-footprint:nth-child(1) { animation-delay: 0s; }
-.ls-footprint:nth-child(2) { animation-delay: 0.3s; transform: scaleX(-1); }
-.ls-footprint:nth-child(3) { animation-delay: 0.6s; }
-.ls-footprint:nth-child(4) { animation-delay: 0.9s; transform: scaleX(-1); }
-.ls-footprint:nth-child(5) { animation-delay: 1.2s; }
+.ls-footprint:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.ls-footprint:nth-child(2) {
+    animation-delay: 0.3s;
+    transform: scaleX(-1);
+}
+
+.ls-footprint:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.ls-footprint:nth-child(4) {
+    animation-delay: 0.9s;
+    transform: scaleX(-1);
+}
+
+.ls-footprint:nth-child(5) {
+    animation-delay: 1.2s;
+}
 
 @keyframes lsStepAppear {
-    0%, 100% { opacity: 0.15; transform: scale(0.9); }
-    50%      { opacity: 0.8; transform: scale(1); }
+
+    0%,
+    100% {
+        opacity: 0.15;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
 }
 
 /* ── Words spoken visual ── */
@@ -800,8 +1011,15 @@
 }
 
 @keyframes lsBubbleFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 .ls-speech-dots {
@@ -820,13 +1038,30 @@
     animation: lsDotPulse 1.5s ease-in-out infinite;
 }
 
-.ls-speech-dot:nth-child(1) { animation-delay: 0s; }
-.ls-speech-dot:nth-child(2) { animation-delay: 0.2s; }
-.ls-speech-dot:nth-child(3) { animation-delay: 0.4s; }
+.ls-speech-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.ls-speech-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ls-speech-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
 
 @keyframes lsDotPulse {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50%      { opacity: 1; transform: scale(1.2); }
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
 /* ── Hair growth visual ── */
@@ -851,15 +1086,46 @@
     transform-origin: bottom;
 }
 
-.ls-hair-strand:nth-child(1) { left: 15%; height: 40px; animation-delay: 0s; }
-.ls-hair-strand:nth-child(2) { left: 30%; height: 55px; animation-delay: 0.3s; }
-.ls-hair-strand:nth-child(3) { left: 45%; height: 50px; animation-delay: 0.6s; }
-.ls-hair-strand:nth-child(4) { left: 60%; height: 45px; animation-delay: 0.9s; }
-.ls-hair-strand:nth-child(5) { left: 75%; height: 35px; animation-delay: 1.2s; }
+.ls-hair-strand:nth-child(1) {
+    left: 15%;
+    height: 40px;
+    animation-delay: 0s;
+}
+
+.ls-hair-strand:nth-child(2) {
+    left: 30%;
+    height: 55px;
+    animation-delay: 0.3s;
+}
+
+.ls-hair-strand:nth-child(3) {
+    left: 45%;
+    height: 50px;
+    animation-delay: 0.6s;
+}
+
+.ls-hair-strand:nth-child(4) {
+    left: 60%;
+    height: 45px;
+    animation-delay: 0.9s;
+}
+
+.ls-hair-strand:nth-child(5) {
+    left: 75%;
+    height: 35px;
+    animation-delay: 1.2s;
+}
 
 @keyframes lsHairGrow {
-    0%, 100% { transform: scaleY(0.7) rotate(-3deg); }
-    50%      { transform: scaleY(1) rotate(3deg); }
+
+    0%,
+    100% {
+        transform: scaleY(0.7) rotate(-3deg);
+    }
+
+    50% {
+        transform: scaleY(1) rotate(3deg);
+    }
 }
 
 /* ── Laughter visual ── */
@@ -890,8 +1156,13 @@
     top: 38%;
 }
 
-.ls-smiley-eye:first-child { left: 30%; }
-.ls-smiley-eye:nth-child(2) { right: 30%; }
+.ls-smiley-eye:first-child {
+    left: 30%;
+}
+
+.ls-smiley-eye:nth-child(2) {
+    right: 30%;
+}
 
 .ls-smiley-mouth {
     position: absolute;
@@ -905,9 +1176,19 @@
 }
 
 @keyframes lsSmileShake {
-    0%, 100% { transform: rotate(-3deg); }
-    25%      { transform: rotate(3deg); }
-    75%      { transform: rotate(-2deg); }
+
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+
+    25% {
+        transform: rotate(3deg);
+    }
+
+    75% {
+        transform: rotate(-2deg);
+    }
 }
 
 .ls-ha-particles {
@@ -922,14 +1203,46 @@
     animation: lsHaFloat 3s ease-in-out infinite;
 }
 
-.ls-ha:nth-child(1) { top: -10px; left: -20px; font-size: 1rem; animation-delay: 0s; }
-.ls-ha:nth-child(2) { top: -20px; right: -10px; font-size: 0.8rem; animation-delay: 0.5s; }
-.ls-ha:nth-child(3) { bottom: 0; left: -30px; font-size: 1.2rem; animation-delay: 1s; }
-.ls-ha:nth-child(4) { bottom: 10px; right: -25px; font-size: 0.9rem; animation-delay: 1.5s; }
+.ls-ha:nth-child(1) {
+    top: -10px;
+    left: -20px;
+    font-size: 1rem;
+    animation-delay: 0s;
+}
+
+.ls-ha:nth-child(2) {
+    top: -20px;
+    right: -10px;
+    font-size: 0.8rem;
+    animation-delay: 0.5s;
+}
+
+.ls-ha:nth-child(3) {
+    bottom: 0;
+    left: -30px;
+    font-size: 1.2rem;
+    animation-delay: 1s;
+}
+
+.ls-ha:nth-child(4) {
+    bottom: 10px;
+    right: -25px;
+    font-size: 0.9rem;
+    animation-delay: 1.5s;
+}
 
 @keyframes lsHaFloat {
-    0%, 100% { opacity: 0; transform: translateY(0); }
-    50%      { opacity: 1; transform: translateY(-15px); }
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-15px);
+    }
 }
 
 /* ── Scroll indicator ── */
@@ -957,20 +1270,29 @@
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(100,100,100,0.6);
+    color: rgba(100, 100, 100, 0.6);
 }
 
 .ls-scroll-arrow {
     width: 20px;
     height: 20px;
-    border-right: 2px solid rgba(100,100,100,0.4);
-    border-bottom: 2px solid rgba(100,100,100,0.4);
+    border-right: 2px solid rgba(100, 100, 100, 0.4);
+    border-bottom: 2px solid rgba(100, 100, 100, 0.4);
     transform: rotate(45deg);
 }
 
 @keyframes lsScrollFade {
-    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
-    50%      { opacity: 1; transform: translateX(-50%) translateY(6px); }
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(6px);
+    }
 }
 
 /* ── Final section ── */
@@ -986,8 +1308,15 @@
 }
 
 @keyframes lsFinalPulse {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .ls-final-message {
@@ -996,12 +1325,12 @@
     text-align: center;
     max-width: 500px;
     line-height: 1.4;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .ls-final-sub {
     font-size: 1rem;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
     margin-top: 1rem;
     font-weight: 600;
 }
@@ -1009,7 +1338,7 @@
 .ls-restart-btn {
     margin-top: 2.5rem;
     padding: 0.9rem 2.2rem;
-    border: 2px solid rgba(255,255,255,0.2);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
     background: transparent;
     color: #fff;
@@ -1021,8 +1350,8 @@
 }
 
 .ls-restart-btn:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* ── Responsive ── */
