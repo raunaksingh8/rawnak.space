@@ -1,742 +1,1076 @@
-/* ============================================
-   LIFESTATS PAGE — Progress.css
-   ============================================ */
+/* ───────────────────────────────────────────────
+   Life Stats – Neal.fun-inspired storytelling
+   ─────────────────────────────────────────────── */
 
-/* ---------- Page Shell ---------- */
-.progress-page {
-    height: 100vh;
-    overflow-y: auto;
-    background: #0a0a0f;
-    color: #f0eee8;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    scroll-behavior: smooth;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+/* ── base ── */
+.ls-results {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
-/* ---------- Navbar ---------- */
-.progress-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.progress-home {
-    color: #f0eee8;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-    display: flex;
-    align-items: center;
-}
-
-.progress-home:hover {
-    opacity: 1;
-}
-
-/* ---------- Main Content ---------- */
-.progress-content {
-    padding-top: 64px;
-}
-
-/* ---------- Intro / Form ---------- */
-.progress-intro {
+/* ── stat section ── */
+.ls-stat-section {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    transition: opacity 0.36s ease, transform 0.36s ease;
-}
-
-.progress-intro.is-leaving {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-.progress-hero {
-    max-width: 600px;
-    margin-bottom: 2.5rem;
-}
-
-.progress-kicker {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #a78bfa;
-    margin-bottom: 1rem;
-}
-
-.progress-hero h1 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    color: #f0eee8;
-}
-
-.progress-hero p {
-    font-size: 1.05rem;
-    color: rgba(240, 238, 232, 0.55);
-    line-height: 1.6;
-}
-
-/* ---------- Form ---------- */
-.age-form {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.age-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(240, 238, 232, 0.45);
-}
-
-.age-form input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    color: #f0eee8;
-    font-size: 1rem;
-    padding: 0.65rem 0.85rem;
-    width: 90px;
-    outline: none;
-    transition: border-color 0.2s ease, background 0.2s ease;
-    -moz-appearance: textfield;
-}
-
-.age-form input::-webkit-outer-spin-button,
-.age-form input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-.age-form input:focus {
-    border-color: #a78bfa;
-    background: rgba(167, 139, 250, 0.08);
-}
-
-.age-form button {
-    background: #a78bfa;
-    border: none;
-    border-radius: 10px;
-    color: #0a0a0f;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 700;
-    padding: 0.7rem 1.6rem;
-    transition: background 0.2s ease, transform 0.15s ease;
-}
-
-.age-form button:hover:not(:disabled) {
-    background: #c4b5fd;
-    transform: translateY(-1px);
-}
-
-.age-form button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.progress-error {
-    margin-top: 1rem;
-    color: #f87171;
-    font-size: 0.9rem;
-}
-
-/* ---------- Story Sections ---------- */
-.ls-story {
-    width: 100%;
-}
-
-.ls-section {
-    min-height: 100vh;
-    display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem 2rem;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.6s ease;
 }
 
-.ls-section.is-visible {
+.ls-stat-section:nth-child(even) {
+    background: #ffffff;
+}
+
+.ls-stat-section:nth-child(odd) {
+    background: #fafafa;
+}
+
+/* ── reveal animation ── */
+.ls-reveal {
+    opacity: 0;
+    transform: translateY(60px) scale(0.96);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ls-reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
-.ls-section-content {
-    max-width: 640px;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+/* staggered children */
+.ls-reveal .ls-stat-number {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ls-title {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0.55;
+.ls-reveal .ls-stat-title {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ls-number {
-    font-size: clamp(3rem, 9vw, 6rem);
-    font-weight: 800;
+.ls-reveal .ls-stat-desc {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ls-reveal .ls-visual {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.7s 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ls-reveal.is-visible .ls-stat-number,
+.ls-reveal.is-visible .ls-stat-title,
+.ls-reveal.is-visible .ls-stat-desc,
+.ls-reveal.is-visible .ls-visual {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ── typography ── */
+.ls-stat-number {
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 900;
+    line-height: 1.05;
     letter-spacing: -0.03em;
-    line-height: 1;
-    display: block;
-}
-
-.ls-desc {
-    font-size: 1rem;
-    line-height: 1.7;
-    opacity: 0.5;
-    max-width: 480px;
-}
-
-/* ---------- Theme Backgrounds ---------- */
-.theme-birthday {
-    background: #0d0b1a;
-}
-
-.theme-days {
-    background: #0a0f1a;
-}
-
-.theme-heartbeats {
-    background: #160a0a;
-}
-
-.theme-breaths {
-    background: #0a1410;
-}
-
-.theme-blood {
-    background: #150808;
-}
-
-.theme-sun {
-    background: #120f04;
-}
-
-.theme-moon {
-    background: #080c14;
-}
-
-.theme-summary {
-    background: #0a0a0f;
-}
-
-/* ---------- Theme Accent Colors ---------- */
-.theme-birthday .ls-title,
-.theme-birthday .ls-number {
-    color: #c084fc;
-}
-
-.theme-days .ls-title,
-.theme-days .ls-number {
-    color: #60a5fa;
-}
-
-.theme-heartbeats .ls-title,
-.theme-heartbeats .ls-number {
-    color: #f87171;
-}
-
-.theme-breaths .ls-title,
-.theme-breaths .ls-number {
-    color: #34d399;
-}
-
-.theme-blood .ls-title,
-.theme-blood .ls-number {
-    color: #fb7185;
-}
-
-.theme-sun .ls-title,
-.theme-sun .ls-number {
-    color: #fbbf24;
-}
-
-.theme-moon .ls-title,
-.theme-moon .ls-number {
-    color: #93c5fd;
-}
-
-/* ---------- Visual: Calendar ---------- */
-.ls-visual {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 0;
-}
-
-.calendar-container {
-    perspective: 800px;
-}
-
-.birth-calendar {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(192, 132, 252, 0.3);
-    border-radius: 18px;
-    padding: 1.5rem 2.5rem;
+    color: #111;
     text-align: center;
-    min-width: 200px;
+    margin-bottom: 0.3rem;
+    font-variant-numeric: tabular-nums;
 }
 
-.animate-calendar {
-    animation: calendarPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.ls-stat-number .ls-number-highlight {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-@keyframes calendarPop {
-    from {
-        opacity: 0;
-        transform: scale(0.7) rotateX(20deg);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) rotateX(0deg);
-    }
-}
-
-.calendar-weekday {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #c084fc;
-    margin-bottom: 0.4rem;
-}
-
-.calendar-day {
-    font-size: 4rem;
+.ls-stat-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
     font-weight: 800;
-    line-height: 1;
-    color: #f0eee8;
-}
-
-.calendar-month {
-    font-size: 0.9rem;
-    opacity: 0.5;
-    margin-top: 0.3rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
+    color: #999;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-/* ---------- Visual: Dot Grid ---------- */
-.dot-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 8px;
+.ls-stat-desc {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 500;
+    color: #555;
+    max-width: 520px;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 3rem;
 }
 
-.grid-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #60a5fa;
-    opacity: 0;
-    animation: dotFadeIn 0.4s ease forwards;
-}
-
-@keyframes dotFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0);
-    }
-
-    to {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-}
-
-/* ---------- Visual: Heart ---------- */
-.heart-visual {
+/* ── visual container ── */
+.ls-visual {
+    width: min(340px, 80vw);
+    height: min(340px, 80vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
 }
 
-.heart-glow {
+/* ── Hero calendar (first section) ── */
+.ls-hero-section {
+    background: #111 !important;
+    color: #fff;
+}
+
+.ls-hero-section .ls-stat-title {
+    color: rgba(255,255,255,0.4);
+}
+
+.ls-hero-section .ls-stat-desc {
+    color: rgba(255,255,255,0.6);
+}
+
+.ls-hero-section .ls-stat-number .ls-number-highlight {
+    background: linear-gradient(135deg, #ef4444, #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ls-hero-calendar {
+    width: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    margin-bottom: 2.5rem;
+    animation: lsCalFloat 4s ease-in-out infinite;
+}
+
+@keyframes lsCalFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+.ls-cal-header {
+    background: #ef4444;
+    color: #fff;
+    font-weight: 900;
+    font-size: 1rem;
+    padding: 0.6rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.ls-cal-body {
+    background: #fff;
+    text-align: center;
+    padding: 1rem 0 0.75rem;
+}
+
+.ls-cal-day {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #111;
+    line-height: 1;
+}
+
+.ls-cal-month {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* ── Heartbeat visual ── */
+.ls-heart-visual {
+    position: relative;
+}
+
+.ls-heart {
+    font-size: 6rem;
+    animation: lsHeartPulse 0.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.4));
+}
+
+@keyframes lsHeartPulse {
+    0%, 100% { transform: scale(1); }
+    15%      { transform: scale(1.15); }
+    30%      { transform: scale(1); }
+    45%      { transform: scale(1.1); }
+}
+
+.ls-ecg-line {
     position: absolute;
-    width: 90px;
-    height: 90px;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 50px;
+}
+
+.ls-ecg-line polyline {
+    fill: none;
+    stroke: #ef4444;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: lsEcgDraw 2s linear infinite;
+}
+
+@keyframes lsEcgDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* ── Blood visual ── */
+.ls-blood-visual {
+    position: relative;
+}
+
+.ls-blood-drop {
+    width: 100px;
+    height: 130px;
+    background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+    border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+    position: relative;
+    animation: lsBloodDrip 3s ease-in-out infinite;
+    box-shadow: 0 20px 50px rgba(239, 68, 68, 0.3);
+}
+
+.ls-blood-drop::after {
+    content: '';
+    position: absolute;
+    top: 22%;
+    left: 28%;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.3);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(248, 113, 113, 0.35) 0%, transparent 70%);
+}
+
+@keyframes lsBloodDrip {
+    0%, 100% { transform: translateY(0) scaleX(1); }
+    50%      { transform: translateY(-15px) scaleX(0.95); }
+}
+
+.ls-blood-ripple {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(239,68,68,0.2), transparent 70%);
+    animation: lsRipple 3s ease-in-out infinite;
+}
+
+@keyframes lsRipple {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+    50%      { transform: translateX(-50%) scale(1.4); opacity: 0.2; }
+}
+
+/* ── Breath / lungs visual ── */
+.ls-breath-visual {
+    position: relative;
+}
+
+.ls-lungs {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.ls-lung {
+    width: 70px;
+    height: 100px;
+    border-radius: 40% 40% 50% 50%;
+    background: linear-gradient(180deg, #93c5fd 0%, #3b82f6 100%);
+    animation: lsLungBreathe 4s ease-in-out infinite;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+}
+
+.ls-lung:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+@keyframes lsLungBreathe {
+    0%, 100% { transform: scaleY(0.85) scaleX(0.9); opacity: 0.7; }
+    50%      { transform: scaleY(1.05) scaleX(1.05); opacity: 1; }
+}
+
+.ls-air-particles {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ls-air-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.5);
+    animation: lsAirFloat 3s ease-in-out infinite;
+}
+
+.ls-air-dot:nth-child(1) { left: -20px; animation-delay: 0s; }
+.ls-air-dot:nth-child(2) { left: 0px;   animation-delay: 0.5s; }
+.ls-air-dot:nth-child(3) { left: 20px;  animation-delay: 1s; }
+.ls-air-dot:nth-child(4) { left: -10px; animation-delay: 1.5s; }
+.ls-air-dot:nth-child(5) { left: 10px;  animation-delay: 2s; }
+
+@keyframes lsAirFloat {
+    0%   { transform: translateY(0); opacity: 0; }
+    30%  { opacity: 1; }
+    100% { transform: translateY(80px); opacity: 0; }
+}
+
+/* ── Space / orbit visual ── */
+.ls-space-section {
+    background: #0a0a1a !important;
+}
+
+.ls-space-section .ls-stat-title {
+    color: rgba(255,255,255,0.35);
+}
+
+.ls-space-section .ls-stat-desc {
+    color: rgba(255,255,255,0.5);
+}
+
+.ls-space-section .ls-stat-number .ls-number-highlight {
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ls-orbit-visual {
+    position: relative;
+}
+
+.ls-orbit-ring {
+    width: 240px;
+    height: 240px;
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 50%;
+    position: relative;
+    animation: lsOrbitSpin 20s linear infinite;
+}
+
+.ls-orbit-sun {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: heartGlowPulse 1s ease-in-out infinite;
-}
-
-@keyframes heartGlowPulse {
-
-    0%,
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.6;
-    }
-
-    50% {
-        transform: translate(-50%, -50%) scale(1.3);
-        opacity: 1;
-    }
-}
-
-.pulsing-heart-svg {
-    width: 72px;
-    height: 72px;
-    animation: heartBeat 1s ease-in-out infinite;
-    position: relative;
-    z-index: 1;
-}
-
-@keyframes heartBeat {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    14% {
-        transform: scale(1.15);
-    }
-
-    28% {
-        transform: scale(1);
-    }
-
-    42% {
-        transform: scale(1.1);
-    }
-
-    56% {
-        transform: scale(1);
-    }
-}
-
-/* ---------- Visual: Breathing Circle ---------- */
-.breathing-circle-outer {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: 2px solid rgba(52, 211, 153, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: breatheOuter 4s ease-in-out infinite;
+    background: radial-gradient(circle, #fde68a 0%, #f59e0b 50%, #d97706 100%);
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.6),
+                0 0 80px rgba(251, 191, 36, 0.3);
+    animation: lsSunGlow 3s ease-in-out infinite;
 }
 
-.breathing-circle-inner {
+@keyframes lsSunGlow {
+    0%, 100% { box-shadow: 0 0 40px rgba(251,191,36,0.6), 0 0 80px rgba(251,191,36,0.3); }
+    50%      { box-shadow: 0 0 60px rgba(251,191,36,0.8), 0 0 100px rgba(251,191,36,0.4); }
+}
+
+.ls-orbit-earth {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #34d399 0%, #3b82f6 100%);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes lsOrbitSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Earth rotations visual ── */
+.ls-earth-visual {
+    position: relative;
+}
+
+.ls-earth-globe {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #2563eb 0%, #1d4ed8 30%, #16a34a 31%, #16a34a 40%, #2563eb 41%, #1e40af 100%);
+    box-shadow: 
+        inset -20px -10px 40px rgba(0,0,0,0.3),
+        0 0 50px rgba(37, 99, 235, 0.3);
+    animation: lsEarthRotate 8s linear infinite;
+    overflow: hidden;
+}
+
+.ls-earth-globe::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 30%;
+    height: 25%;
+    background: #16a34a;
+    border-radius: 40%;
+    opacity: 0.7;
+}
+
+@keyframes lsEarthRotate {
+    to { transform: rotate(360deg); }
+}
+
+.ls-earth-atmosphere {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 2px solid rgba(59, 130, 246, 0.15);
+    animation: lsAtmosphere 4s ease-in-out infinite;
+}
+
+@keyframes lsAtmosphere {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50%      { transform: scale(1.05); opacity: 1; }
+}
+
+/* ── Moon visual ── */
+.ls-moon-visual {
+    position: relative;
+}
+
+.ls-moon-orbit-ring {
+    width: 220px;
+    height: 220px;
+    border: 1.5px dashed rgba(150,150,170,0.3);
+    border-radius: 50%;
+    position: relative;
+    animation: lsMoonOrbit 6s linear infinite;
+}
+
+.ls-moon-earth-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(52, 211, 153, 0.6), rgba(52, 211, 153, 0.1));
-    animation: breatheInner 4s ease-in-out infinite;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
 }
 
-@keyframes breatheOuter {
-
-    0%,
-    100% {
-        transform: scale(1);
-        border-color: rgba(52, 211, 153, 0.3);
-    }
-
-    50% {
-        transform: scale(1.3);
-        border-color: rgba(52, 211, 153, 0.7);
-    }
-}
-
-@keyframes breatheInner {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.6;
-    }
-
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-}
-
-/* ---------- Visual: Liquid Wave ---------- */
-.liquid-container {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid rgba(251, 113, 133, 0.3);
-    overflow: hidden;
-    position: relative;
-    background: rgba(251, 113, 133, 0.05);
-}
-
-.liquid-wave {
+.ls-moon-body {
     position: absolute;
-    width: 200%;
-    height: 200%;
-    border-radius: 40%;
-    background: rgba(251, 113, 133, 0.25);
-    top: 20%;
-    left: -50%;
-}
-
-.liquid-wave.w1 {
-    animation: waveAnim 3s linear infinite;
-}
-
-.liquid-wave.w2 {
-    animation: waveAnim 4.5s linear infinite reverse;
-    opacity: 0.5;
-}
-
-@keyframes waveAnim {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* ---------- Visual: Solar System ---------- */
-.solar-system {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sun-core {
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: radial-gradient(circle, #fde68a, #f59e0b);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
-    flex-shrink: 0;
+    background: radial-gradient(circle at 40% 35%, #e5e7eb, #9ca3af);
+    box-shadow: inset -4px -3px 6px rgba(0,0,0,0.2), 0 0 15px rgba(156,163,175,0.3);
 }
 
-.earth-orbit-ring {
+@keyframes lsMoonOrbit {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Moon craters ── */
+.ls-moon-body::before {
+    content: '';
     position: absolute;
+    top: 30%;
+    left: 20%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.08);
+    box-shadow: 8px 4px 0 3px rgba(0,0,0,0.06), 3px 10px 0 2px rgba(0,0,0,0.05);
+}
+
+/* ── Blinks visual ── */
+.ls-blink-visual {
+    position: relative;
+}
+
+.ls-eye {
+    width: 120px;
+    height: 60px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #111;
+    position: relative;
+    overflow: hidden;
+    animation: lsBlink 4s ease-in-out infinite;
+}
+
+.ls-eye-iris {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #6366f1, #312e81);
+}
+
+.ls-eye-iris::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #111;
+}
+
+.ls-eye-iris::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+}
+
+@keyframes lsBlink {
+    0%, 18%, 22%, 100% { transform: scaleY(1); }
+    20%                { transform: scaleY(0.05); }
+}
+
+/* ── Sleep visual ── */
+.ls-sleep-section {
+    background: #0f172a !important;
+}
+
+.ls-sleep-section .ls-stat-title {
+    color: rgba(255,255,255,0.35);
+}
+
+.ls-sleep-section .ls-stat-desc {
+    color: rgba(255,255,255,0.5);
+}
+
+.ls-sleep-section .ls-stat-number .ls-number-highlight {
+    background: linear-gradient(135deg, #818cf8, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ls-sleep-visual {
+    position: relative;
+}
+
+.ls-moon-sleep {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 65% 35%, transparent 30%, #fde68a 31%);
+    box-shadow: 0 0 50px rgba(253, 230, 138, 0.3);
+    position: relative;
+    animation: lsMoonRock 5s ease-in-out infinite;
+}
+
+@keyframes lsMoonRock {
+    0%, 100% { transform: rotate(-5deg); }
+    50%      { transform: rotate(5deg); }
+}
+
+.ls-zzz {
+    position: absolute;
+    font-weight: 900;
+    color: rgba(253, 230, 138, 0.6);
+    animation: lsZzz 3s ease-in-out infinite;
+}
+
+.ls-zzz:nth-child(2) {
+    font-size: 1.5rem;
+    top: -20px;
+    right: -30px;
+    animation-delay: 0s;
+}
+
+.ls-zzz:nth-child(3) {
+    font-size: 2rem;
+    top: -50px;
+    right: -55px;
+    animation-delay: 0.5s;
+}
+
+.ls-zzz:nth-child(4) {
+    font-size: 2.5rem;
+    top: -85px;
+    right: -75px;
+    animation-delay: 1s;
+}
+
+@keyframes lsZzz {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50%      { opacity: 1; transform: translateY(-10px); }
+}
+
+/* ── Food visual ── */
+.ls-food-visual {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ls-food-item {
+    font-size: 3rem;
+    animation: lsFoodBounce 2s ease-in-out infinite;
+}
+
+.ls-food-item:nth-child(1) { animation-delay: 0s; }
+.ls-food-item:nth-child(2) { animation-delay: 0.2s; }
+.ls-food-item:nth-child(3) { animation-delay: 0.4s; }
+.ls-food-item:nth-child(4) { animation-delay: 0.6s; }
+.ls-food-item:nth-child(5) { animation-delay: 0.8s; }
+.ls-food-item:nth-child(6) { animation-delay: 1.0s; }
+
+@keyframes lsFoodBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+/* ── Water visual ── */
+.ls-water-section {
+    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%) !important;
+}
+
+.ls-water-visual {
+    position: relative;
+}
+
+.ls-water-glass {
+    width: 80px;
+    height: 140px;
+    border: 3px solid #93c5fd;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ls-water-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 75%;
+    background: linear-gradient(180deg, #60a5fa, #3b82f6);
+    border-radius: 0 0 9px 9px;
+    animation: lsWaterWave 3s ease-in-out infinite;
+}
+
+.ls-water-fill::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -10%;
+    width: 120%;
+    height: 12px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.3) 0%, transparent 70%);
+    animation: lsWaveSway 2s ease-in-out infinite;
+}
+
+@keyframes lsWaterWave {
+    0%, 100% { height: 70%; }
+    50%      { height: 80%; }
+}
+
+@keyframes lsWaveSway {
+    0%, 100% { transform: translateX(-5%); }
+    50%      { transform: translateX(5%); }
+}
+
+.ls-water-drops {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ls-water-drop {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: #60a5fa;
+    border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+    animation: lsDropFall 2s ease-in infinite;
+    opacity: 0;
+}
+
+.ls-water-drop:nth-child(1) { left: -5px; animation-delay: 0s; }
+.ls-water-drop:nth-child(2) { left: 10px; animation-delay: 0.6s; }
+.ls-water-drop:nth-child(3) { left: 25px; animation-delay: 1.2s; }
+
+@keyframes lsDropFall {
+    0%   { transform: translateY(0); opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translateY(50px); opacity: 0; }
+}
+
+/* ── Steps / walking visual ── */
+.ls-steps-visual {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.ls-footprint {
+    font-size: 2.5rem;
+    opacity: 0.3;
+    animation: lsStepAppear 2s ease-in-out infinite;
+}
+
+.ls-footprint:nth-child(1) { animation-delay: 0s; }
+.ls-footprint:nth-child(2) { animation-delay: 0.3s; transform: scaleX(-1); }
+.ls-footprint:nth-child(3) { animation-delay: 0.6s; }
+.ls-footprint:nth-child(4) { animation-delay: 0.9s; transform: scaleX(-1); }
+.ls-footprint:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes lsStepAppear {
+    0%, 100% { opacity: 0.15; transform: scale(0.9); }
+    50%      { opacity: 0.8; transform: scale(1); }
+}
+
+/* ── Words spoken visual ── */
+.ls-words-visual {
+    position: relative;
+}
+
+.ls-speech-bubble {
+    padding: 1.5rem 2.5rem;
+    background: #111;
+    color: #fff;
+    border-radius: 24px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    position: relative;
+    animation: lsBubbleFloat 3s ease-in-out infinite;
+}
+
+.ls-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid #111;
+}
+
+@keyframes lsBubbleFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+.ls-speech-dots {
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    display: flex;
+    gap: 6px;
+}
+
+.ls-speech-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d1d5db;
+    animation: lsDotPulse 1.5s ease-in-out infinite;
+}
+
+.ls-speech-dot:nth-child(1) { animation-delay: 0s; }
+.ls-speech-dot:nth-child(2) { animation-delay: 0.2s; }
+.ls-speech-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes lsDotPulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50%      { opacity: 1; transform: scale(1.2); }
+}
+
+/* ── Hair growth visual ── */
+.ls-hair-visual {
+    position: relative;
+}
+
+.ls-hair-head {
+    width: 80px;
+    height: 90px;
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+    border-radius: 40px 40px 35px 35px;
+    position: relative;
+}
+
+.ls-hair-strand {
+    position: absolute;
+    width: 2px;
+    background: linear-gradient(to top, #92400e, transparent);
+    bottom: 100%;
+    animation: lsHairGrow 4s ease-in-out infinite;
+    transform-origin: bottom;
+}
+
+.ls-hair-strand:nth-child(1) { left: 15%; height: 40px; animation-delay: 0s; }
+.ls-hair-strand:nth-child(2) { left: 30%; height: 55px; animation-delay: 0.3s; }
+.ls-hair-strand:nth-child(3) { left: 45%; height: 50px; animation-delay: 0.6s; }
+.ls-hair-strand:nth-child(4) { left: 60%; height: 45px; animation-delay: 0.9s; }
+.ls-hair-strand:nth-child(5) { left: 75%; height: 35px; animation-delay: 1.2s; }
+
+@keyframes lsHairGrow {
+    0%, 100% { transform: scaleY(0.7) rotate(-3deg); }
+    50%      { transform: scaleY(1) rotate(3deg); }
+}
+
+/* ── Laughter visual ── */
+.ls-laugh-section {
+    background: linear-gradient(180deg, #fefce8 0%, #fef9c3 100%) !important;
+}
+
+.ls-laugh-visual {
+    position: relative;
+}
+
+.ls-smiley {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    border: 1px dashed rgba(251, 191, 36, 0.2);
-    animation: orbitSpin 6s linear infinite;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background: #fbbf24;
+    position: relative;
+    animation: lsSmileShake 2s ease-in-out infinite;
+    box-shadow: 0 10px 40px rgba(251, 191, 36, 0.3);
 }
 
-.earth-planet {
+.ls-smiley-eye {
     position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: radial-gradient(circle, #60a5fa, #1d4ed8);
+    background: #111;
+    top: 38%;
 }
 
-.moon-satellite {
+.ls-smiley-eye:first-child { left: 30%; }
+.ls-smiley-eye:nth-child(2) { right: 30%; }
+
+.ls-smiley-mouth {
     position: absolute;
-    top: -5px;
-    right: -8px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #d1d5db;
-}
-
-@keyframes orbitSpin {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-/* ---------- Visual: Lunar System ---------- */
-.lunar-system {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.earth-core {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #60a5fa, #1e3a8a);
-    box-shadow: 0 0 16px rgba(96, 165, 250, 0.5);
-}
-
-.moon-orbit-ring {
-    position: absolute;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 1px dashed rgba(147, 197, 253, 0.25);
-    animation: orbitSpin 5s linear infinite;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.moon-planet {
-    position: absolute;
-    top: -7px;
+    bottom: 28%;
     left: 50%;
     transform: translateX(-50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #e2e8f0, #94a3b8);
-    box-shadow: 0 0 8px rgba(147, 197, 253, 0.4);
+    width: 40px;
+    height: 20px;
+    border-radius: 0 0 50% 50%;
+    background: #92400e;
 }
 
-/* ---------- Summary Card ---------- */
-.summary-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
+@keyframes lsSmileShake {
+    0%, 100% { transform: rotate(-3deg); }
+    25%      { transform: rotate(3deg); }
+    75%      { transform: rotate(-2deg); }
 }
 
-.summary-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #f0eee8;
+.ls-ha-particles {
+    position: absolute;
+    inset: -40px;
 }
 
-.summary-grid {
+.ls-ha {
+    position: absolute;
+    font-weight: 900;
+    color: #f59e0b;
+    animation: lsHaFloat 3s ease-in-out infinite;
+}
+
+.ls-ha:nth-child(1) { top: -10px; left: -20px; font-size: 1rem; animation-delay: 0s; }
+.ls-ha:nth-child(2) { top: -20px; right: -10px; font-size: 0.8rem; animation-delay: 0.5s; }
+.ls-ha:nth-child(3) { bottom: 0; left: -30px; font-size: 1.2rem; animation-delay: 1s; }
+.ls-ha:nth-child(4) { bottom: 10px; right: -25px; font-size: 0.9rem; animation-delay: 1.5s; }
+
+@keyframes lsHaFloat {
+    0%, 100% { opacity: 0; transform: translateY(0); }
+    50%      { opacity: 1; transform: translateY(-15px); }
+}
+
+/* ── Scroll indicator ── */
+.ls-scroll-hint {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 0.5rem;
+    z-index: 10;
+    animation: lsScrollFade 2s ease-in-out infinite;
+    pointer-events: none;
 }
 
-.summary-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+.ls-scroll-hint.is-hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.ls-scroll-hint-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(240, 238, 232, 0.4);
+    color: rgba(100,100,100,0.6);
 }
 
-.summary-value {
-    font-size: 0.95rem;
+.ls-scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid rgba(100,100,100,0.4);
+    border-bottom: 2px solid rgba(100,100,100,0.4);
+    transform: rotate(45deg);
+}
+
+@keyframes lsScrollFade {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+    50%      { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ── Final section ── */
+.ls-final-section {
+    background: #111 !important;
+    color: #fff;
+}
+
+.ls-final-emoji {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    animation: lsFinalPulse 2s ease-in-out infinite;
+}
+
+@keyframes lsFinalPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.1); }
+}
+
+.ls-final-message {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    text-align: center;
+    max-width: 500px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.9);
+}
+
+.ls-final-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 1rem;
     font-weight: 600;
-    color: #f0eee8;
 }
 
-.reset-button {
+.ls-restart-btn {
+    margin-top: 2.5rem;
+    padding: 0.9rem 2.2rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 999px;
     background: transparent;
-    border: 1px solid rgba(167, 139, 250, 0.5);
-    border-radius: 10px;
-    color: #a78bfa;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.7rem 1.6rem;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
 }
 
-.reset-button:hover {
-    background: rgba(167, 139, 250, 0.1);
-    border-color: #a78bfa;
-    transform: translateY(-1px);
+.ls-restart-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
 }
 
-/* ---------- Reduced Motion ---------- */
-@media (prefers-reduced-motion: reduce) {
-
-    .animate-calendar,
-    .grid-dot,
-    .pulsing-heart-svg,
-    .heart-glow,
-    .breathing-circle-outer,
-    .breathing-circle-inner,
-    .liquid-wave,
-    .earth-orbit-ring,
-    .moon-orbit-ring {
-        animation: none !important;
+/* ── Responsive ── */
+@media (max-width: 620px) {
+    .ls-stat-section {
+        padding: 4rem 1.5rem;
     }
 
-    .ls-section {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 600px) {
-    .age-form {
-        flex-direction: column;
-        align-items: center;
+    .ls-visual {
+        width: min(260px, 70vw);
+        height: min(260px, 70vw);
     }
 
-    .age-form input {
-        width: 120px;
+    .ls-hero-calendar {
+        width: 150px;
     }
 
-    .summary-item {
-        flex-direction: column;
-        gap: 0.3rem;
-        text-align: center;
+    .ls-cal-day {
+        font-size: 3rem;
     }
 
-    .summary-card {
-        padding: 1.5rem;
+    .ls-orbit-ring {
+        width: 180px;
+        height: 180px;
+    }
+
+    .ls-orbit-sun {
+        width: 44px;
+        height: 44px;
+    }
+
+    .ls-earth-globe {
+        width: 100px;
+        height: 100px;
+    }
+
+    .ls-moon-orbit-ring {
+        width: 170px;
+        height: 170px;
+    }
+
+    .ls-eye {
+        width: 90px;
+        height: 45px;
+    }
+
+    .ls-smiley {
+        width: 90px;
+        height: 90px;
     }
 }

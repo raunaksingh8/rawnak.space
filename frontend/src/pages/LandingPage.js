@@ -24,6 +24,34 @@ function LandingPage() {
 
 
     useEffect(() => {
+        /* Lock page scroll while the landing page is active.
+           This was previously a global CSS rule that broke scroll on other pages. */
+        const html = document.documentElement;
+        const body = document.body;
+        const root = document.getElementById('root');
+
+        html.style.overflow = 'hidden';
+        html.style.height = '100%';
+        body.style.overflow = 'hidden';
+        body.style.height = '100%';
+        if (root) {
+            root.style.overflow = 'hidden';
+            root.style.height = '100%';
+        }
+
+        return () => {
+            html.style.overflow = '';
+            html.style.height = '';
+            body.style.overflow = '';
+            body.style.height = '';
+            if (root) {
+                root.style.overflow = '';
+                root.style.height = '';
+            }
+        };
+    }, []);
+
+    useEffect(() => {
         document.querySelectorAll('.emoji-border').forEach(el => {
             el.textContent = '🌻'.repeat(500);
         });

@@ -3,6 +3,8 @@
     background: #FAFAFA;
     color: #111111;
     font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .progress-navbar {
@@ -33,6 +35,7 @@
 
 .progress-content {
     width: 100%;
+    overflow: visible;
 }
 
 .progress-intro {
