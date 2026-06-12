@@ -1,0 +1,64 @@
+<svg viewBox="0 0 1200 525" xmlns="http://www.w3.org/2000/svg" width="1200" height="525">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="525" fill="url(#bg)"/>
+
+  <!-- Hourglass icon -->
+  <g transform="translate(80, 120)" opacity="0.9">
+    <polygon points="0,0 120,0 60,100" fill="none" stroke="url(#accent)" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="0,200 120,200 60,100" fill="none" stroke="url(#accent)" stroke-width="4" stroke-linejoin="round"/>
+    <!-- Sand top -->
+    <polygon points="20,20 100,20 60,75" fill="#f97316" opacity="0.3"/>
+    <!-- Sand bottom -->
+    <polygon points="25,175 95,175 60,130" fill="#f97316" opacity="0.5"/>
+    <!-- Falling sand line -->
+    <line x1="60" y1="85" x2="60" y2="130" stroke="#f97316" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- Title -->
+  <text x="280" y="220" font-family="Segoe UI, sans-serif" font-size="72" font-weight="700" fill="#ffffff">Since When</text>
+
+  <!-- Subtitle -->
+  <text x="282" y="268" font-family="Segoe UI, sans-serif" font-size="24" fill="#888888">how long has it been?</text>
+
+  <!-- Timer blocks -->
+  <g transform="translate(700, 340)">
+    <rect x="0" y="0" width="80" height="90" rx="10" fill="#1a1a2e" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+    <text x="40" y="55" font-family="Consolas, monospace" font-size="36" font-weight="700" fill="#f97316" text-anchor="middle">384</text>
+    <text x="40" y="78" font-family="Segoe UI, sans-serif" font-size="12" fill="#666" text-anchor="middle">DAYS</text>
+
+    <text x="100" y="55" font-family="Consolas, monospace" font-size="36" fill="#555" text-anchor="middle">:</text>
+
+    <rect x="120" y="0" width="80" height="90" rx="10" fill="#1a1a2e" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+    <text x="160" y="55" font-family="Consolas, monospace" font-size="36" font-weight="700" fill="#f97316" text-anchor="middle">14</text>
+    <text x="160" y="78" font-family="Segoe UI, sans-serif" font-size="12" fill="#666" text-anchor="middle">HRS</text>
+
+    <text x="220" y="55" font-family="Consolas, monospace" font-size="36" fill="#555" text-anchor="middle">:</text>
+
+    <rect x="240" y="0" width="80" height="90" rx="10" fill="#1a1a2e" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+    <text x="280" y="55" font-family="Consolas, monospace" font-size="36" font-weight="700" fill="#f97316" text-anchor="middle">27</text>
+    <text x="280" y="78" font-family="Segoe UI, sans-serif" font-size="12" fill="#666" text-anchor="middle">MIN</text>
+
+    <text x="340" y="55" font-family="Consolas, monospace" font-size="36" fill="#555" text-anchor="middle">:</text>
+
+    <rect x="360" y="0" width="80" height="90" rx="10" fill="#1a1a2e" stroke="#f97316" stroke-width="1.5" opacity="0.8"/>
+    <text x="400" y="55" font-family="Consolas, monospace" font-size="36" font-weight="700" fill="#f97316" text-anchor="middle">53</text>
+    <text x="400" y="78" font-family="Segoe UI, sans-serif" font-size="12" fill="#666" text-anchor="middle">SEC</text>
+  </g>
+
+  <!-- Decorative dots -->
+  <circle cx="300" cy="400" r="3" fill="#f97316" opacity="0.2"/>
+  <circle cx="350" cy="380" r="2" fill="#ef4444" opacity="0.15"/>
+  <circle cx="400" cy="420" r="4" fill="#f97316" opacity="0.1"/>
+  <circle cx="500" cy="390" r="2.5" fill="#ef4444" opacity="0.2"/>
+  <circle cx="600" cy="410" r="3" fill="#f97316" opacity="0.15"/>
+</svg>

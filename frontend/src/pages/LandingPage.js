@@ -13,6 +13,7 @@ function LandingPage() {
         { image: "/images/dowrycal.svg", route: "/dowrycal" },
         { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
         { image: "/images/moneyspent.svg", route: "/moneyspent" },
+        { image: "/images/sincewhen.svg", route: "/since-when" },
         { image: "/images/share.svg", route: "/share" }
     ];
 
@@ -51,11 +52,11 @@ function LandingPage() {
         };
     }, []);
 
-    useEffect(() => {
-        document.querySelectorAll('.emoji-border').forEach(el => {
-            el.textContent = '🌻'.repeat(500);
-        });
-    }, []);
+    // useEffect(() => {
+    //     document.querySelectorAll('.emoji-border').forEach(el => {
+    //         el.textContent = '🌻'.repeat(500);
+    //     });
+    // }, []);
 
 
     const handleCardClick = (route, index) => {

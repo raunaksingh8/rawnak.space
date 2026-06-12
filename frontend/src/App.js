@@ -14,6 +14,8 @@ import DowryForm from './pages/DowryForm';
 import FcBarcelona from './pages/FcBarcelona';
 import MoneySpent from './pages/MoneySpent';
 import Share from './pages/Share';
+import SinceWhen from './pages/sincewhen';
+import Admin from './pages/Admin';
 
 function RouteTitleUpdater() {
     const location = useLocation();
@@ -29,7 +31,9 @@ function RouteTitleUpdater() {
             '/dowrycal': 'Dowry Calculator',
             '/fcbarcelona': 'FC Barcelona',
             '/moneyspent': 'Money Spent',
-            '/share': 'Share'
+            '/share': 'Share',
+            '/since-when': 'Since When',
+            '/admin': 'Admin'
         };
 
         document.title = routeTitles[location.pathname] || 'Fullstack';
@@ -87,6 +91,8 @@ function App() {
                 <Route path="/fcbarcelona" element={<FcBarcelona />} />
                 <Route path="/moneyspent" element={<MoneySpent />} />
                 <Route path="/share" element={<Share />} />
+                <Route path="/since-when" element={<SinceWhen />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route
                     path="*"
                     element={
