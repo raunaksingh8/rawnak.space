@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
 import '../styles/sincewhen.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 /* ───── helpers ───── */
 
@@ -161,12 +162,9 @@ function SinceWhen() {
 
     const fetchEvents = useCallback(async () => {
         try {
-            const { data, error: sbError } = await supabase
-                .from('since_when')
-                .select('*')
-                .order('timestamp', { ascending: true });
-
-            if (sbError) throw sbError;
+            const res = await fetch(`${API_URL}/api/since-when`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
             setEvents(data || []);
             setError(null);
         } catch (err) {

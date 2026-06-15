@@ -91,5 +91,58 @@ app.post("/api/auth/login", async (req, res) => {
   }
 })
 
+// ─── JWT Auth Middleware ───
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+// ─── Since When Endpoints ───
+
+// GET all since_when events (public)
+app.get("/api/since-when", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM since_when ORDER BY timestamp ASC"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Failed to fetch since_when:", err);
+    res.status(500).json({ message: "Failed to fetch events" });
+  }
+});
+
+// PUT update timestamp for a since_when event (protected)
+app.put("/api/since-when/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { timestamp } = req.body;
+
+  if (!timestamp) {
+    return res.status(400).json({ message: "Timestamp is required" });
+  }
+
+  try {
+    const result = await pool.query(
+      "UPDATE since_when SET timestamp = $1 WHERE id = $2 RETURNING *",
+      [timestamp, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Failed to update since_when:", err);
+    res.status(500).json({ message: "Failed to update event" });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

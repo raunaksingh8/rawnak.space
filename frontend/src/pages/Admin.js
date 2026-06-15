@@ -2,10 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
-import { supabase } from '../supabaseClient';
 import Loader from '../components/Loader';
 import '../styles/Login.css';
 import '../styles/Admin.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Admin() {
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
@@ -25,12 +26,9 @@ function Admin() {
 
     const fetchEvents = useCallback(async () => {
         try {
-            const { data, error: sbError } = await supabase
-                .from('since_when')
-                .select('*')
-                .order('id', { ascending: true });
-
-            if (sbError) throw sbError;
+            const res = await fetch(`${API_URL}/api/since-when`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
             setEvents(data || []);
             setError(null);
 
@@ -73,22 +71,21 @@ function Admin() {
         }
         setLoginLoading(true);
         try {
-            const { data, error: sbError } = await supabase
-                .from('admin_login')
-                .select('*')
-                .eq('username', username)
-                .eq('password', password)
-                .maybeSingle();
+            const res = await fetch(`${API_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: username, password }),
+            });
+            const data = await res.json();
 
-            if (sbError) throw sbError;
-
-            if (data) {
-                localStorage.setItem('adminLoggedIn', 'true');
-                setIsAdminLoggedIn(true);
-                toast.success("Hey Admin!");
-            } else {
-                toast.error("Tum Admin nhi ho!");
+            if (!res.ok) {
+                throw new Error(data.message || 'Login failed');
             }
+
+            localStorage.setItem('adminLoggedIn', 'true');
+            localStorage.setItem('token', data.token);
+            setIsAdminLoggedIn(true);
+            toast.success("Hey Admin!");
         } catch (err) {
             console.error("Admin Login Error:", err);
             toast.error(err.message || "Failed to authenticate.");
@@ -107,13 +104,26 @@ function Admin() {
         const newTimestamp = editedTimestamps[id];
         if (!newTimestamp) return;
 
-        try {
-            const { error: sbError } = await supabase
-                .from('since_when')
-                .update({ timestamp: new Date(newTimestamp).toISOString() })
-                .eq('id', id);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error("Not authenticated. Please log in again.");
+            return;
+        }
 
-            if (sbError) throw sbError;
+        try {
+            const res = await fetch(`${API_URL}/api/since-when/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ timestamp: new Date(newTimestamp).toISOString() }),
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.message || `HTTP ${res.status}`);
+            }
 
             // Show success
             setUpdatedIds((prev) => ({ ...prev, [id]: true }));
