@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../styles/LandingPage.css';
 
@@ -79,13 +79,13 @@ function LandingPage() {
             <div className="emoji-border right"></div>
 
 
-            <nav className="navbar">
+            {/* <nav className="navbar">
                 <div className="logo" aria-hidden="true"></div>
                 <div className="nav-links">
                     <Link to="/login" className="btn-signup">Login</Link>
                     <Link to="/signup" className="btn-signup">Sign Up</Link>
                 </div>
-            </nav>
+            </nav> */}
 
 
             <div className={`landing-intro ${isLeaving ? 'is-leaving' : ''}`}>
