@@ -8,12 +8,12 @@ function LandingPage() {
 
 
     const cards = [
-        { image: "/images/progress.svg", route: "/progress" },
+        { image: "/images/sincewhen.svg", route: "/since-when" },
         { image: "/images/lifestats.svg", route: "/lifestats" },
         { image: "/images/dowrycal.svg", route: "/dowrycal" },
         { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
         { image: "/images/moneyspent.svg", route: "/moneyspent" },
-        { image: "/images/sincewhen.svg", route: "/since-when" },
+        { image: "/images/progress.svg", route: "/progress" },
         { image: "/images/share.svg", route: "/share" }
     ];
 
