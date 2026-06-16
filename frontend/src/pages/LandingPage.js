@@ -14,7 +14,8 @@ function LandingPage() {
         { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
         { image: "/images/moneyspent.svg", route: "/moneyspent" },
         { image: "/images/progress.svg", route: "/progress" },
-        { image: "/images/share.svg", route: "/share" }
+        { image: "/images/share.svg", route: "/share" },
+        { image: "/images/birthheatmap.svg", route: "/birthheatmap" }
     ];
 
 

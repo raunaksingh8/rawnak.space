@@ -1,0 +1,534 @@
+/* ═══════════════════════════════════════════════════════════════
+   birthheatmap.css — India Live Birth Counter
+   Dark theme · Gold accent · Inter font · Fully responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ─── CSS Variables ─── */
+:root {
+  --bh-bg: #0b0f1a;
+  --bh-surface: #111827;
+  --bh-surface-2: #1a2236;
+  --bh-border: #1e293b;
+  --bh-gold: #FFD700;
+  --bh-gold-dim: #b8991a;
+  --bh-gold-glow: rgba(255, 215, 0, 0.35);
+  --bh-text: #e2e8f0;
+  --bh-text-dim: #94a3b8;
+  --bh-text-muted: #64748b;
+  --bh-green: #22c55e;
+  --bh-red: #ef4444;
+  --bh-radius: 14px;
+  --bh-radius-sm: 8px;
+  --bh-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ─── Page Reset ─── */
+.bh-page {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--bh-bg);
+  font-family: var(--bh-font);
+  color: var(--bh-text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Main Layout: Left Map + Right Panel ─── */
+.bh-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ─── Left Panel: Map ─── */
+.bh-map-panel {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 60%),
+    var(--bh-bg);
+  overflow: hidden;
+}
+
+.bh-map-panel::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  left: -150px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  animation: bh-orb-float 12s ease-in-out infinite;
+}
+
+@keyframes bh-orb-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, 40px); }
+}
+
+.bh-map-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--bh-text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.bh-map-subtitle {
+  font-size: 0.78rem;
+  color: var(--bh-text-muted);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* SVG Map Container */
+.bh-map-svg-container {
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 1 / 1.05;
+  position: relative;
+}
+
+.bh-map-svg-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* State paths */
+.bh-state {
+  fill: var(--bh-surface-2);
+  stroke: #2a3548;
+  stroke-width: 0.7;
+  cursor: pointer;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.bh-state:hover {
+  fill: #253050;
+  stroke: var(--bh-gold-dim);
+  stroke-width: 1.2;
+}
+
+/* Blink animation on birth */
+.bh-state.blink {
+  fill: var(--bh-gold) !important;
+  stroke: var(--bh-gold) !important;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 12px var(--bh-gold-glow)) drop-shadow(0 0 24px rgba(255, 215, 0, 0.18));
+  animation: bh-state-pulse 0.9s ease-out;
+}
+
+@keyframes bh-state-pulse {
+  0% { opacity: 1; fill: var(--bh-gold); filter: drop-shadow(0 0 18px var(--bh-gold-glow)); }
+  40% { opacity: 0.95; }
+  100% { opacity: 1; fill: var(--bh-surface-2); filter: none; }
+}
+
+/* ─── Tooltip ─── */
+.bh-tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  background: rgba(17, 24, 39, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--bh-border);
+  border-radius: var(--bh-radius-sm);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: var(--bh-text);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.bh-tooltip.visible {
+  opacity: 1;
+}
+
+.bh-tooltip-name {
+  font-weight: 700;
+  color: var(--bh-gold);
+  margin-bottom: 3px;
+}
+
+.bh-tooltip-births {
+  color: var(--bh-text-dim);
+  font-size: 0.75rem;
+}
+
+/* ─── Right Panel ─── */
+.bh-stats-panel {
+  flex: 0 0 380px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 20px;
+  background: var(--bh-surface);
+  border-left: 1px solid var(--bh-border);
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+/* ─── Glass Card ─── */
+.bh-card {
+  background: var(--bh-surface-2);
+  border: 1px solid var(--bh-border);
+  border-radius: var(--bh-radius);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bh-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+}
+
+/* ─── Timer Card ─── */
+.bh-timer-card {
+  text-align: center;
+}
+
+.bh-timer-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--bh-text-muted);
+  margin-bottom: 6px;
+}
+
+.bh-timer-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--bh-text);
+  letter-spacing: 2px;
+}
+
+/* ─── Baby Counter ─── */
+.bh-counter-card {
+  text-align: center;
+  padding: 24px 18px;
+}
+
+.bh-counter-icon {
+  font-size: 2rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.bh-counter-number {
+  font-size: 3.6rem;
+  font-weight: 900;
+  color: var(--bh-gold);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.bh-counter-number.pop {
+  animation: bh-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bh-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+.bh-counter-label {
+  font-size: 0.78rem;
+  color: var(--bh-text-dim);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ─── Progress Bar (time until next birth) ─── */
+.bh-progress-wrap {
+  margin-top: 14px;
+}
+
+.bh-progress-label {
+  font-size: 0.65rem;
+  color: var(--bh-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+
+.bh-progress-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.bh-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bh-gold), #ffec80);
+  border-radius: 100px;
+  width: 0%;
+  transition: width 0.08s linear;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+/* ─── Mini Stats Grid ─── */
+.bh-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.bh-stat-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--bh-border);
+  border-radius: var(--bh-radius-sm);
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.bh-stat-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--bh-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.bh-stat-label {
+  font-size: 0.65rem;
+  color: var(--bh-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+/* ─── Recent Births Feed ─── */
+.bh-feed-card {
+  padding: 14px 18px;
+}
+
+.bh-feed-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--bh-text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bh-feed-title::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--bh-green);
+  border-radius: 50%;
+  animation: bh-live-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes bh-live-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.bh-feed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bh-feed-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bh-radius-sm);
+  animation: bh-feed-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-left: 2px solid var(--bh-gold);
+}
+
+@keyframes bh-feed-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.bh-feed-state {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--bh-text);
+}
+
+.bh-feed-time {
+  font-size: 0.68rem;
+  color: var(--bh-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Fact Footer ─── */
+.bh-fact {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.06), rgba(255, 215, 0, 0.02));
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: var(--bh-radius);
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.bh-fact-icon {
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.bh-fact-text {
+  font-size: 0.75rem;
+  color: var(--bh-text-dim);
+  line-height: 1.5;
+}
+
+.bh-fact-text strong {
+  color: var(--bh-gold);
+  font-weight: 700;
+}
+
+/* ─── Back button / Navbar ─── */
+.bh-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 100;
+  background: rgba(11, 15, 26, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bh-border);
+}
+
+.bh-home-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bh-text-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.bh-home-link:hover {
+  color: var(--bh-gold);
+}
+
+.bh-home-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Push layout below navbar */
+.bh-layout {
+  padding-top: 48px;
+}
+
+/* ─── Loading State ─── */
+.bh-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bh-bg);
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bh-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--bh-border);
+  border-top-color: var(--bh-gold);
+  border-radius: 50%;
+  animation: bh-spin 0.8s linear infinite;
+}
+
+@keyframes bh-spin {
+  to { transform: rotate(360deg); }
+}
+
+.bh-loading-text {
+  font-size: 0.85rem;
+  color: var(--bh-text-muted);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .bh-layout {
+    flex-direction: column;
+  }
+
+  .bh-map-panel {
+    flex: none;
+    min-height: 50vh;
+    padding: 16px;
+  }
+
+  .bh-stats-panel {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--bh-border);
+    max-height: none;
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .bh-counter-number {
+    font-size: 2.6rem;
+  }
+
+  .bh-timer-value {
+    font-size: 1.3rem;
+  }
+
+  .bh-stats-panel {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .bh-map-title {
+    font-size: 0.9rem;
+  }
+}

@@ -133,9 +133,9 @@ function EventCard({ event, index }) {
             </div>
 
             <div className="sincewhen-timer">
-                <SlotDigit value={elapsed.yrs} width={Math.max(2, String(elapsed.yrs).length)} label="Yrs" delay={baseDelay} accentColor={accent} />
+                <SlotDigit value={elapsed.yrs} width={Math.max(2, String(elapsed.yrs).length)} label="Years" delay={baseDelay} accentColor={accent} />
                 <span className="sincewhen-separator">:</span>
-                <SlotDigit value={elapsed.mos} width={Math.max(2, String(elapsed.mos).length)} label="Mos" delay={baseDelay + 200} accentColor={accent} />
+                <SlotDigit value={elapsed.mos} width={Math.max(2, String(elapsed.mos).length)} label="Months" delay={baseDelay + 200} accentColor={accent} />
                 <span className="sincewhen-separator">:</span>
                 <SlotDigit value={elapsed.days} width={Math.max(2, String(elapsed.days).length)} label="Days" delay={baseDelay + 400} accentColor={accent} />
                 <span className="sincewhen-separator">:</span>
