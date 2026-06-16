@@ -4,16 +4,15 @@ import '../styles/birthheatmap.css';
 
 /* ═══════════════════════════════════════════════════════════════
    India Live Birth Counter — birthheatmap.js
-   All logic lives here. No inline scripts.
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Constants ─── */
-const BIRTH_INTERVAL = 1280; // ms between births
-const BLINK_DURATION = 900;  // ms for gold blink on state
-const FEED_MAX = 8;          // max items in recent births feed
+const BIRTH_INTERVAL = 1280;
+const BLINK_DURATION = 900;
+const FEED_MAX = 8;
 const GEOJSON_URL = process.env.PUBLIC_URL + '/Indian_States.geojson';
 
-/* ─── Population weights for weighted random ─── */
+/* ─── Population weights ─── */
 const STATE_WEIGHTS = {
     'Uttar Pradesh': 20,
     'Bihar': 12,
@@ -53,7 +52,6 @@ const STATE_WEIGHTS = {
 };
 
 /* ─── Helpers ─── */
-
 function buildWeightedPool(geojsonFeatures) {
     const pool = [];
     const features = Array.isArray(geojsonFeatures) ? geojsonFeatures : (geojsonFeatures?.features || []);
@@ -61,9 +59,7 @@ function buildWeightedPool(geojsonFeatures) {
         const name = feature.properties?.NAME_1;
         if (!name) return;
         const weight = STATE_WEIGHTS[name] || 1;
-        for (let i = 0; i < weight; i++) {
-            pool.push(name);
-        }
+        for (let i = 0; i < weight; i++) pool.push(name);
     });
     return pool;
 }
@@ -90,31 +86,29 @@ function timeAgo(timestamp) {
 }
 
 /* ─── Main Component ─── */
-
 export default function BirthHeatmap() {
-    /* Refs for D3-managed DOM */
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
     const progressRef = useRef(null);
     const counterRef = useRef(null);
+    const mapContainerRef = useRef(null); // FIX: ref the container for accurate sizing
 
-    /* State */
     const [loading, setLoading] = useState(true);
     const [geojson, setGeojson] = useState(null);
     const [birthCount, setBirthCount] = useState(0);
     const [elapsedSec, setElapsedSec] = useState(0);
     const [feedItems, setFeedItems] = useState([]);
 
-    /* Mutable refs for interval callbacks */
     const birthCountRef = useRef(0);
-    const statePathsRef = useRef({});  // name -> DOM path element
-    const stateBirthsRef = useRef({}); // name -> count this session
+    const statePathsRef = useRef({});
+    const stateBirthsRef = useRef({});
     const weightedPoolRef = useRef([]);
     const geojsonRef = useRef(null);
     const startTimeRef = useRef(Date.now());
     const d3Ref = useRef(null);
+    const blinkTimeoutsRef = useRef({}); // FIX: track blink timeouts per state
 
-    /* ─── Load D3 dynamically ─── */
+    /* ─── Load D3 ─── */
     const loadD3 = useCallback(() => {
         return new Promise((resolve, reject) => {
             if (window.d3) { resolve(window.d3); return; }
@@ -129,19 +123,20 @@ export default function BirthHeatmap() {
     /* ─── Draw map ─── */
     const drawMap = useCallback((d3, geojson) => {
         const svgEl = svgRef.current;
-        if (!svgEl) return;
+        const containerEl = mapContainerRef.current; // FIX: use dedicated container ref
+        if (!svgEl || !containerEl) return;
 
         const svg = d3.select(svgEl);
         svg.selectAll('*').remove();
 
-        const containerEl = svgEl.parentElement;
-        const width = containerEl.clientWidth;
-        const height = containerEl.clientHeight || width * 1.05;
+        // FIX: use getBoundingClientRect for reliable dimensions on mobile
+        const rect = containerEl.getBoundingClientRect();
+        const width = rect.width || containerEl.offsetWidth || 300;
+        const height = rect.height || containerEl.offsetHeight || width * 1.05;
 
         svg.attr('viewBox', `0 0 ${width} ${height}`)
             .attr('preserveAspectRatio', 'xMidYMid meet');
 
-        /* Projection — Mercator centered on India */
         const projection = d3.geoMercator()
             .center([82, 22])
             .scale(Math.min(width, height) * 1.35)
@@ -149,7 +144,6 @@ export default function BirthHeatmap() {
 
         const path = d3.geoPath().projection(projection);
 
-        /* Draw states */
         const paths = svg.selectAll('path')
             .data(geojson.features)
             .enter()
@@ -158,32 +152,51 @@ export default function BirthHeatmap() {
             .attr('class', 'bh-state')
             .attr('data-state', (d) => d.properties.NAME_1);
 
-        /* Store references */
         const statePathMap = {};
         paths.each(function (d) {
             statePathMap[d.properties.NAME_1] = this;
         });
         statePathsRef.current = statePathMap;
 
-        /* Tooltip handlers */
+        // FIX: tooltip only on non-touch devices; use touchstart on mobile
+        const isTouchDevice = window.matchMedia('(hover: none)').matches;
         const tooltipEl = tooltipRef.current;
 
-        paths.on('mousemove', function (event, d) {
-            const name = d.properties.NAME_1;
-            const births = stateBirthsRef.current[name] || 0;
-            if (tooltipEl) {
-                tooltipEl.innerHTML =
-                    `<div class="bh-tooltip-name">${name}</div>` +
-                    `<div class="bh-tooltip-births">${births} birth${births !== 1 ? 's' : ''} this session</div>`;
-                tooltipEl.style.left = event.clientX + 14 + 'px';
-                tooltipEl.style.top = event.clientY - 10 + 'px';
-                tooltipEl.classList.add('visible');
-            }
-        });
+        if (!isTouchDevice) {
+            paths.on('mousemove', function (event, d) {
+                const name = d.properties.NAME_1;
+                const births = stateBirthsRef.current[name] || 0;
+                if (tooltipEl) {
+                    tooltipEl.innerHTML =
+                        `<div class="bh-tooltip-name">${name}</div>` +
+                        `<div class="bh-tooltip-births">${births} birth${births !== 1 ? 's' : ''} this session</div>`;
+                    tooltipEl.style.left = event.clientX + 14 + 'px';
+                    tooltipEl.style.top = event.clientY - 10 + 'px';
+                    tooltipEl.classList.add('visible');
+                }
+            });
 
-        paths.on('mouseleave', function () {
-            if (tooltipEl) tooltipEl.classList.remove('visible');
-        });
+            paths.on('mouseleave', function () {
+                if (tooltipEl) tooltipEl.classList.remove('visible');
+            });
+        } else {
+            // FIX: tap-to-show tooltip on mobile
+            paths.on('touchstart', function (event, d) {
+                event.preventDefault();
+                const name = d.properties.NAME_1;
+                const births = stateBirthsRef.current[name] || 0;
+                const touch = event.touches[0];
+                if (tooltipEl) {
+                    tooltipEl.innerHTML =
+                        `<div class="bh-tooltip-name">${name}</div>` +
+                        `<div class="bh-tooltip-births">${births} birth${births !== 1 ? 's' : ''} this session</div>`;
+                    tooltipEl.style.left = touch.clientX + 14 + 'px';
+                    tooltipEl.style.top = touch.clientY - 40 + 'px';
+                    tooltipEl.classList.add('visible');
+                    setTimeout(() => tooltipEl.classList.remove('visible'), 2000);
+                }
+            });
+        }
     }, []);
 
     /* ─── Birth event ─── */
@@ -192,42 +205,42 @@ export default function BirthHeatmap() {
         if (!pool.length) return;
 
         const stateName = pickWeightedState(pool);
-
-        /* Blink the state path */
         const pathEl = statePathsRef.current[stateName];
+
         if (pathEl) {
+            // FIX: clear any existing blink timeout for this state before re-adding class
+            if (blinkTimeoutsRef.current[stateName]) {
+                clearTimeout(blinkTimeoutsRef.current[stateName]);
+                pathEl.classList.remove('blink');
+                // Force reflow so re-adding class restarts the animation
+                void pathEl.offsetWidth;
+            }
             pathEl.classList.add('blink');
-            setTimeout(() => pathEl.classList.remove('blink'), BLINK_DURATION);
+            blinkTimeoutsRef.current[stateName] = setTimeout(() => {
+                pathEl.classList.remove('blink');
+                delete blinkTimeoutsRef.current[stateName];
+            }, BLINK_DURATION);
         }
 
-        /* Increment birth count */
         birthCountRef.current += 1;
         setBirthCount(birthCountRef.current);
 
-        /* Track per-state births */
         stateBirthsRef.current[stateName] = (stateBirthsRef.current[stateName] || 0) + 1;
 
-        /* Pop animation on counter */
         const counterEl = counterRef.current;
         if (counterEl) {
             counterEl.classList.remove('pop');
-            // Force reflow to restart animation
             void counterEl.offsetWidth;
             counterEl.classList.add('pop');
         }
 
-        /* Add to feed */
         setFeedItems((prev) => {
-            const newItem = {
-                state: stateName,
-                time: Date.now(),
-                id: birthCountRef.current,
-            };
+            const newItem = { state: stateName, time: Date.now(), id: birthCountRef.current };
             return [newItem, ...prev].slice(0, FEED_MAX);
         });
     }, []);
 
-    /* ─── Initialize everything ─── */
+    /* ─── Init ─── */
     useEffect(() => {
         let birthInterval;
         let timerInterval;
@@ -245,28 +258,22 @@ export default function BirthHeatmap() {
 
                 if (cancelled) return;
 
-                /* Build weighted pool */
                 weightedPoolRef.current = buildWeightedPool(geojson.features);
                 geojsonRef.current = geojson;
                 setGeojson(geojson);
 
-                /* Start birth ticker */
                 birthInterval = setInterval(triggerBirth, BIRTH_INTERVAL);
 
-                /* Session timer — ticks every second */
                 startTimeRef.current = Date.now();
                 timerInterval = setInterval(() => {
                     const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
                     setElapsedSec(elapsed);
                 }, 1000);
 
-                /* Progress bar — smooth 60fps-ish animation */
                 progressInterval = setInterval(() => {
                     const progressEl = progressRef.current;
                     if (!progressEl) return;
-                    const now = Date.now();
-                    // Approximate: the interval fires every BIRTH_INTERVAL from the start
-                    const elapsed = (now - startTimeRef.current) % BIRTH_INTERVAL;
+                    const elapsed = (Date.now() - startTimeRef.current) % BIRTH_INTERVAL;
                     const pct = Math.min((elapsed / BIRTH_INTERVAL) * 100, 100);
                     progressEl.style.width = pct + '%';
                 }, 30);
@@ -280,12 +287,16 @@ export default function BirthHeatmap() {
 
         init();
 
-        /* Handle resize */
+        // FIX: debounced resize handler to avoid excessive redraws on mobile scroll/zoom
+        let resizeTimer;
         function handleResize() {
-            const d3 = d3Ref.current;
-            const geojson = geojsonRef.current;
-            if (!d3 || !svgRef.current || !geojson) return;
-            drawMap(d3, geojson);
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const d3 = d3Ref.current;
+                const geojson = geojsonRef.current;
+                if (!d3 || !svgRef.current || !geojson) return;
+                drawMap(d3, geojson);
+            }, 150);
         }
         window.addEventListener('resize', handleResize);
 
@@ -294,35 +305,33 @@ export default function BirthHeatmap() {
             clearInterval(birthInterval);
             clearInterval(timerInterval);
             clearInterval(progressInterval);
+            clearTimeout(resizeTimer);
+            // Clear all pending blink timeouts
+            Object.values(blinkTimeoutsRef.current).forEach(clearTimeout);
             window.removeEventListener('resize', handleResize);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    /* ─── Draw map when loaded ─── */
+    /* ─── Draw map after load — FIX: use requestAnimationFrame so container has painted ─── */
     useEffect(() => {
         const d3 = d3Ref.current;
         if (!loading && geojson && d3) {
-            drawMap(d3, geojson);
+            // Wait two animation frames so the layout has fully settled on mobile
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    drawMap(d3, geojson);
+                });
+            });
         }
     }, [loading, geojson, drawMap]);
 
     /* ─── Derived stats ─── */
-    const ratePerMinute = elapsedSec > 0
-        ? ((birthCount / elapsedSec) * 60).toFixed(1)
-        : '0.0';
-
-    const ratePerHour = elapsedSec > 0
-        ? Math.round((birthCount / elapsedSec) * 3600)
-        : 0;
-
-    const ratePerDay = elapsedSec > 0
-        ? Math.round((birthCount / elapsedSec) * 86400).toLocaleString()
-        : '0';
-
+    const ratePerMinute = elapsedSec > 0 ? ((birthCount / elapsedSec) * 60).toFixed(1) : '0.0';
+    const ratePerHour = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 3600) : 0;
+    const ratePerDay = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 86400).toLocaleString() : '0';
     const intervalDisplay = (BIRTH_INTERVAL / 1000).toFixed(1) + 's';
 
-    /* ─── Render ─── */
     if (loading) {
         return (
             <div className="bh-page">
@@ -336,7 +345,6 @@ export default function BirthHeatmap() {
 
     return (
         <div className="bh-page">
-            {/* Navbar */}
             <nav className="bh-navbar">
                 <Link to="/" className="bh-home-link" aria-label="Home">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -347,42 +355,30 @@ export default function BirthHeatmap() {
                 </Link>
             </nav>
 
-            {/* Tooltip (positioned fixed, moved by JS) */}
             <div className="bh-tooltip" ref={tooltipRef}></div>
 
-            {/* Main Layout */}
             <div className="bh-layout">
-
-                {/* ─── Left: Map ─── */}
                 <div className="bh-map-panel">
                     <div className="bh-map-title">🇮🇳 India Live Birth Map</div>
                     <div className="bh-map-subtitle">Real-time simulated birth events across states</div>
-                    <div className="bh-map-svg-container">
+                    {/* FIX: attach mapContainerRef here for accurate size measurement */}
+                    <div className="bh-map-svg-container" ref={mapContainerRef}>
                         <svg ref={svgRef}></svg>
                     </div>
                 </div>
 
-                {/* ─── Right: Stats Panel ─── */}
                 <div className="bh-stats-panel">
-
-                    {/* Timer */}
                     <div className="bh-card bh-timer-card">
                         <div className="bh-timer-label">Session Duration</div>
                         <div className="bh-timer-value">{formatTimer(elapsedSec)}</div>
                     </div>
 
-                    {/* Baby Counter */}
                     <div className="bh-card bh-counter-card">
                         <span className="bh-counter-icon">👶</span>
-                        <div
-                            className="bh-counter-number"
-                            ref={counterRef}
-                        >
+                        <div className="bh-counter-number" ref={counterRef}>
                             {birthCount.toLocaleString()}
                         </div>
                         <div className="bh-counter-label">Births This Session</div>
-
-                        {/* Progress bar to next birth */}
                         <div className="bh-progress-wrap">
                             <div className="bh-progress-label">Next birth</div>
                             <div className="bh-progress-track">
@@ -391,7 +387,6 @@ export default function BirthHeatmap() {
                         </div>
                     </div>
 
-                    {/* Mini Stats Grid */}
                     <div className="bh-stats-grid">
                         <div className="bh-stat-item">
                             <div className="bh-stat-value">{ratePerMinute}</div>
@@ -411,7 +406,6 @@ export default function BirthHeatmap() {
                         </div>
                     </div>
 
-                    {/* Recent Births Feed */}
                     <div className="bh-card bh-feed-card">
                         <div className="bh-feed-title">Live Feed</div>
                         <ul className="bh-feed-list">
@@ -430,7 +424,6 @@ export default function BirthHeatmap() {
                         </ul>
                     </div>
 
-                    {/* India Birth Rate Fact */}
                     <div className="bh-fact">
                         <span className="bh-fact-icon">📊</span>
                         <div className="bh-fact-text">
@@ -440,7 +433,6 @@ export default function BirthHeatmap() {
                             India adds about <strong>24.5 million</strong> people annually.
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
