@@ -2,14 +2,8 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/birthheatmap.css';
 
-/* ═══════════════════════════════════════════════════════════════
-   India Live Birth Counter — birthheatmap.js
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ─── Constants ─── */
 const BIRTH_INTERVAL = 1280;
 const BLINK_DURATION = 900;
-const FEED_MAX = 8;
 const GEOJSON_URL = process.env.PUBLIC_URL + '/Indian_States.geojson';
 
 /* ─── Population weights ─── */
@@ -77,19 +71,13 @@ function formatTimer(seconds) {
     return `${pad(m)}:${pad(s)}`;
 }
 
-function timeAgo(timestamp) {
-    const diff = Math.floor((Date.now() - timestamp) / 1000);
-    if (diff < 5) return 'just now';
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    return `${Math.floor(diff / 3600)}h ago`;
-}
+
 
 /* ─── Main Component ─── */
 export default function BirthHeatmap() {
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
-    const progressRef = useRef(null);
+
     const counterRef = useRef(null);
     const mapContainerRef = useRef(null); // FIX: ref the container for accurate sizing
 
@@ -97,7 +85,6 @@ export default function BirthHeatmap() {
     const [geojson, setGeojson] = useState(null);
     const [birthCount, setBirthCount] = useState(0);
     const [elapsedSec, setElapsedSec] = useState(0);
-    const [feedItems, setFeedItems] = useState([]);
 
     const birthCountRef = useRef(0);
     const statePathsRef = useRef({});
@@ -208,18 +195,19 @@ export default function BirthHeatmap() {
         const pathEl = statePathsRef.current[stateName];
 
         if (pathEl) {
-            // FIX: clear any existing blink timeout for this state before re-adding class
+            // Clear any existing blink timeout for this state before re-adding class
             if (blinkTimeoutsRef.current[stateName]) {
                 clearTimeout(blinkTimeoutsRef.current[stateName]);
                 pathEl.classList.remove('blink');
-                // Force reflow so re-adding class restarts the animation
-                void pathEl.offsetWidth;
             }
-            pathEl.classList.add('blink');
-            blinkTimeoutsRef.current[stateName] = setTimeout(() => {
-                pathEl.classList.remove('blink');
-                delete blinkTimeoutsRef.current[stateName];
-            }, BLINK_DURATION);
+            // Use rAF to restart animation without forced reflow (avoids layout thrash on mobile)
+            requestAnimationFrame(() => {
+                pathEl.classList.add('blink');
+                blinkTimeoutsRef.current[stateName] = setTimeout(() => {
+                    pathEl.classList.remove('blink');
+                    delete blinkTimeoutsRef.current[stateName];
+                }, BLINK_DURATION);
+            });
         }
 
         birthCountRef.current += 1;
@@ -230,21 +218,17 @@ export default function BirthHeatmap() {
         const counterEl = counterRef.current;
         if (counterEl) {
             counterEl.classList.remove('pop');
-            void counterEl.offsetWidth;
-            counterEl.classList.add('pop');
+            // Use rAF instead of forced reflow to restart pop animation
+            requestAnimationFrame(() => {
+                counterEl.classList.add('pop');
+            });
         }
-
-        setFeedItems((prev) => {
-            const newItem = { state: stateName, time: Date.now(), id: birthCountRef.current };
-            return [newItem, ...prev].slice(0, FEED_MAX);
-        });
     }, []);
 
     /* ─── Init ─── */
     useEffect(() => {
         let birthInterval;
         let timerInterval;
-        let progressInterval;
         let cancelled = false;
 
         async function init() {
@@ -270,13 +254,7 @@ export default function BirthHeatmap() {
                     setElapsedSec(elapsed);
                 }, 1000);
 
-                progressInterval = setInterval(() => {
-                    const progressEl = progressRef.current;
-                    if (!progressEl) return;
-                    const elapsed = (Date.now() - startTimeRef.current) % BIRTH_INTERVAL;
-                    const pct = Math.min((elapsed / BIRTH_INTERVAL) * 100, 100);
-                    progressEl.style.width = pct + '%';
-                }, 30);
+
 
                 setLoading(false);
             } catch (err) {
@@ -304,10 +282,9 @@ export default function BirthHeatmap() {
             cancelled = true;
             clearInterval(birthInterval);
             clearInterval(timerInterval);
-            clearInterval(progressInterval);
             clearTimeout(resizeTimer);
             // Clear all pending blink timeouts
-            Object.values(blinkTimeoutsRef.current).forEach(clearTimeout);
+            // Object.values(blinkTimeoutsRef.current).forEach(clearTimeout);
             window.removeEventListener('resize', handleResize);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -379,12 +356,12 @@ export default function BirthHeatmap() {
                             {birthCount.toLocaleString()}
                         </div>
                         <div className="bh-counter-label">Births This Session</div>
-                        <div className="bh-progress-wrap">
+                        {/* <div className="bh-progress-wrap">
                             <div className="bh-progress-label">Next birth</div>
                             <div className="bh-progress-track">
                                 <div className="bh-progress-bar" ref={progressRef}></div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="bh-stats-grid">
@@ -406,23 +383,7 @@ export default function BirthHeatmap() {
                         </div>
                     </div>
 
-                    <div className="bh-card bh-feed-card">
-                        <div className="bh-feed-title">Live Feed</div>
-                        <ul className="bh-feed-list">
-                            {feedItems.map((item) => (
-                                <li className="bh-feed-item" key={item.id}>
-                                    <span className="bh-feed-state">{item.state}</span>
-                                    <span className="bh-feed-time">{timeAgo(item.time)}</span>
-                                </li>
-                            ))}
-                            {feedItems.length === 0 && (
-                                <li className="bh-feed-item" style={{ opacity: 0.4, borderLeftColor: 'var(--bh-text-muted)' }}>
-                                    <span className="bh-feed-state">Waiting for first birth…</span>
-                                    <span className="bh-feed-time">—</span>
-                                </li>
-                            )}
-                        </ul>
-                    </div>
+
 
                     <div className="bh-fact">
                         <span className="bh-fact-icon">📊</span>
