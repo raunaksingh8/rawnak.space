@@ -356,12 +356,6 @@ export default function BirthHeatmap() {
                             {birthCount.toLocaleString()}
                         </div>
                         <div className="bh-counter-label">Births This Session</div>
-                        {/* <div className="bh-progress-wrap">
-                            <div className="bh-progress-label">Next birth</div>
-                            <div className="bh-progress-track">
-                                <div className="bh-progress-bar" ref={progressRef}></div>
-                            </div>
-                        </div> */}
                     </div>
 
                     <div className="bh-stats-grid">

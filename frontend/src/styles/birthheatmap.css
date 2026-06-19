@@ -166,33 +166,6 @@
   }
 }
 
-/* FIX: on devices that support it, keep the subtle glow but only on desktop */
-@media (hover: hover) and (min-width: 900px) {
-  .bh-state.blink {
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
-  }
-
-  @keyframes bh-state-pulse {
-    0% {
-      fill: var(--bh-gold);
-      stroke: var(--bh-gold);
-      opacity: 1;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-    }
-
-    30% {
-      fill: #ffe84d;
-      opacity: 0.95;
-    }
-
-    100% {
-      fill: var(--bh-surface-2);
-      stroke: #2a3548;
-      opacity: 1;
-      filter: none;
-    }
-  }
-}
 
 /* FIX: respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -355,36 +328,6 @@
   letter-spacing: 1.5px;
 }
 
-/* ─── Progress Bar ─── */
-.bh-progress-wrap {
-  margin-top: 14px;
-}
-
-.bh-progress-label {
-  font-size: 0.65rem;
-  color: var(--bh-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 6px;
-}
-
-.bh-progress-track {
-  height: 5px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 100px;
-  overflow: hidden;
-}
-
-.bh-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--bh-gold), #ffec80);
-  border-radius: 100px;
-  width: 0%;
-  /* FIX: use transform for progress instead of width where possible,
-     but since we drive width via JS ref, just ensure no will-change thrash */
-  transition: width 0.08s linear;
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-}
 
 /* ─── Mini Stats Grid ─── */
 .bh-stats-grid {
@@ -644,8 +587,5 @@
     font-size: 0.9rem;
   }
 
-  /* FIX: reduce orb animation on small screens — not visible anyway */
-  .bh-map-panel::before {
-    display: none;
-  }
+
 }
