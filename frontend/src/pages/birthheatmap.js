@@ -124,10 +124,16 @@ export default function BirthHeatmap() {
         svg.attr('viewBox', `0 0 ${width} ${height}`)
             .attr('preserveAspectRatio', 'xMidYMid meet');
 
+        // TEMP DEBUG — remove after diagnosing
+        console.log('geojson.type:', geojson.type);
+        console.log('geojson.features.length:', geojson.features?.length);
+        console.log('container width/height:', width, height);
+
         const projection = d3.geoMercator()
-            .center([82, 22])
-            .scale(Math.min(width, height) * 1.35)
-            .translate([width / 2, height / 2]);
+            .fitSize([width, height], geojson);
+
+        console.log('projection.scale():', projection.scale());
+        console.log('projection.translate():', projection.translate());
 
         const path = d3.geoPath().projection(projection);
 
