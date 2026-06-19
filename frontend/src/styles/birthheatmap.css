@@ -126,8 +126,6 @@
   stroke: #2a3548;
   stroke-width: 0.7;
   cursor: pointer;
-  /* FIX: promote to own layer for smoother transitions; avoid layout-triggering props */
-  will-change: fill;
   transition: fill 0.3s ease, stroke 0.3s ease;
 }
 

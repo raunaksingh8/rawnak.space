@@ -167,18 +167,18 @@ export default function BirthHeatmap() {
                 if (tooltipEl) tooltipEl.classList.remove('visible');
             });
         } else {
-            // FIX: tap-to-show tooltip on mobile
-            paths.on('touchstart', function (event, d) {
-                event.preventDefault();
+            // FIX: use click instead of touchstart — touchstart + preventDefault()
+            // blocks the browser scroll thread over the entire map area.
+            // Click fires after tap-up so it never fights scrolling.
+            paths.on('click', function (event, d) {
                 const name = d.properties.NAME_1;
                 const births = stateBirthsRef.current[name] || 0;
-                const touch = event.touches[0];
                 if (tooltipEl) {
                     tooltipEl.innerHTML =
                         `<div class="bh-tooltip-name">${name}</div>` +
                         `<div class="bh-tooltip-births">${births} birth${births !== 1 ? 's' : ''} this session</div>`;
-                    tooltipEl.style.left = touch.clientX + 14 + 'px';
-                    tooltipEl.style.top = touch.clientY - 40 + 'px';
+                    tooltipEl.style.left = event.clientX + 14 + 'px';
+                    tooltipEl.style.top = event.clientY - 40 + 'px';
                     tooltipEl.classList.add('visible');
                     setTimeout(() => tooltipEl.classList.remove('visible'), 2000);
                 }
@@ -304,10 +304,10 @@ export default function BirthHeatmap() {
     }, [loading, geojson, drawMap]);
 
     /* ─── Derived stats ─── */
-    const ratePerMinute = elapsedSec > 0 ? ((birthCount / elapsedSec) * 60).toFixed(1) : '0.0';
-    const ratePerHour = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 3600) : 0;
-    const ratePerDay = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 86400).toLocaleString() : '0';
-    const intervalDisplay = (BIRTH_INTERVAL / 1000).toFixed(1) + 's';
+    // const ratePerMinute = elapsedSec > 0 ? ((birthCount / elapsedSec) * 60).toFixed(1) : '0.0';
+    // const ratePerHour = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 3600) : 0;
+    // const ratePerDay = elapsedSec > 0 ? Math.round((birthCount / elapsedSec) * 86400).toLocaleString() : '0';
+    // const intervalDisplay = (BIRTH_INTERVAL / 1000).toFixed(1) + 's';
 
     if (loading) {
         return (
@@ -358,7 +358,7 @@ export default function BirthHeatmap() {
                         <div className="bh-counter-label">Births This Session</div>
                     </div>
 
-                    <div className="bh-stats-grid">
+                    {/* <div className="bh-stats-grid">
                         <div className="bh-stat-item">
                             <div className="bh-stat-value">{ratePerMinute}</div>
                             <div className="bh-stat-label">Rate / min</div>
@@ -375,7 +375,7 @@ export default function BirthHeatmap() {
                             <div className="bh-stat-value">{intervalDisplay}</div>
                             <div className="bh-stat-label">Interval</div>
                         </div>
-                    </div>
+                    </div> */}
 
 
 
