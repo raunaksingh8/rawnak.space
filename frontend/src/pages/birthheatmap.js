@@ -165,7 +165,7 @@ export default function BirthHeatmap() {
                 if (tooltipEl) {
                     tooltipEl.innerHTML =
                         `<div class="bh-tooltip-name">${name}</div>` +
-                        `<div class="bh-tooltip-births">${births} birth${births !== 1 ? 's' : ''} this session</div>`;
+                        `<div class="bh-tooltip-births">${births} Babies born while you were here</div>`;
                     tooltipEl.style.left = event.clientX + 14 + 'px';
                     tooltipEl.style.top = event.clientY - 10 + 'px';
                     tooltipEl.classList.add('visible');
