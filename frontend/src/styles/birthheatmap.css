@@ -51,7 +51,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   padding: 24px;
   background:
@@ -90,7 +90,8 @@
   color: var(--bh-text-dim);
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 0;
   text-align: center;
 }
 
@@ -104,7 +105,7 @@
 /* SVG Map Container */
 .bh-map-svg-container {
   width: 100%;
-  max-width: 720px;
+  max-width: 380px;
   /* FIX: use padding-bottom trick for reliable aspect ratio on mobile */
   position: relative;
   aspect-ratio: 1 / 1.05;
@@ -112,8 +113,8 @@
 
 .bh-map-svg-container svg {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 2.5vw;
+  left: 3vw;
   width: 100%;
   height: 100%;
   display: block;
@@ -551,7 +552,7 @@
   /* FIX: give the map container an explicit height on mobile so D3 can measure it */
   .bh-map-svg-container {
     width: 100%;
-    max-width: 100%;
+    max-width: 380px;
     /* Keep aspect-ratio, but also set a min-height as safety net */
     min-height: 280px;
   }

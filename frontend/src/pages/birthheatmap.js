@@ -121,19 +121,22 @@ export default function BirthHeatmap() {
         const width = rect.width || containerEl.offsetWidth || 300;
         const height = rect.height || containerEl.offsetHeight || width * 1.05;
 
+        // Focus projection on mainland India (exclude far-flung islands from fit calculation)
+        // so the map appears large and centered instead of zoomed-out to fit Andaman & Nicobar
+        const mainlandBounds = {
+            type: 'Feature',
+            geometry: {
+                type: 'Polygon',
+                coordinates: [[[68, 8.2], [68, 35.8], [97.5, 35.8], [97.5, 8.2], [68, 8.2]]]
+            }
+        };
+
+        const pad = Math.min(width, height) * 0.03;
+        const projection = d3.geoMercator()
+            .fitExtent([[pad, pad], [width - pad, height - pad]], mainlandBounds);
+
         svg.attr('viewBox', `0 0 ${width} ${height}`)
             .attr('preserveAspectRatio', 'xMidYMid meet');
-
-        // TEMP DEBUG — remove after diagnosing
-        console.log('geojson.type:', geojson.type);
-        console.log('geojson.features.length:', geojson.features?.length);
-        console.log('container width/height:', width, height);
-
-        const projection = d3.geoMercator()
-            .fitSize([width, height], geojson);
-
-        console.log('projection.scale():', projection.scale());
-        console.log('projection.translate():', projection.translate());
 
         const path = d3.geoPath().projection(projection);
 
@@ -342,8 +345,8 @@ export default function BirthHeatmap() {
 
             <div className="bh-layout">
                 <div className="bh-map-panel">
-                    <div className="bh-map-title">🇮🇳 India Live Birth Map</div>
-                    <div className="bh-map-subtitle">Real-time simulated birth events across states</div>
+                    <div className="bh-map-title">India Live Birth Map</div>
+                    {/* <div className="bh-map-subtitle">Real-time simulated birth events across states</div> */}
                     {/* FIX: attach mapContainerRef here for accurate size measurement */}
                     <div className="bh-map-svg-container" ref={mapContainerRef}>
                         <svg ref={svgRef}></svg>
@@ -352,16 +355,16 @@ export default function BirthHeatmap() {
 
                 <div className="bh-stats-panel">
                     <div className="bh-card bh-timer-card">
-                        <div className="bh-timer-label">Session Duration</div>
+                        <div className="bh-timer-label">Time on this page</div>
                         <div className="bh-timer-value">{formatTimer(elapsedSec)}</div>
                     </div>
 
                     <div className="bh-card bh-counter-card">
-                        <span className="bh-counter-icon">👶</span>
+                        {/* <span className="bh-counter-icon">👶</span> */}
                         <div className="bh-counter-number" ref={counterRef}>
                             {birthCount.toLocaleString()}
                         </div>
-                        <div className="bh-counter-label">Births This Session</div>
+                        <div className="bh-counter-label">Total Births</div>
                     </div>
 
                     {/* <div className="bh-stats-grid">
@@ -386,7 +389,7 @@ export default function BirthHeatmap() {
 
 
                     <div className="bh-fact">
-                        <span className="bh-fact-icon">📊</span>
+                        {/* <span className="bh-fact-icon">📊</span> */}
                         <div className="bh-fact-text">
                             India records approximately <strong>67,000+ births every day</strong>,
                             making it roughly <strong>1 birth every 1.3 seconds</strong>.
@@ -396,6 +399,6 @@ export default function BirthHeatmap() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
