@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.set('trust proxy', 1);
 const cors = require("cors");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
