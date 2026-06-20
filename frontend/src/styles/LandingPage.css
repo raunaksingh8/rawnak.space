@@ -7,11 +7,9 @@
 
 .landing {
     font-family: 'Segoe UI', sans-serif;
-    background: white;
-
-
     height: 100vh;
-    overflow-y: auto; /* scrollbar now inside landing */
+    overflow-y: auto;
+    /* scrollbar now inside landing */
 
 
     position: relative;
@@ -22,6 +20,9 @@
     padding-bottom: 40px;
     padding-left: 40px;
     padding-right: 55px;
+    background-color: #FAFAFA;
+    background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
 }
 
 
@@ -155,7 +156,7 @@
 
 .card:hover {
     transform: scale(1.04) translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -163,7 +164,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -198,11 +199,11 @@
 }
 
 
-/* ========== Neal.fun-style Footer ========== */
-
 
 .neal-footer {
-    background: #fff;
+    background-color: #FAFAFA;
+    background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     font-size: 21px;
     margin-top: 25px;
