@@ -13,6 +13,15 @@
     align-items: center;
     background: transparent !important;
     box-shadow: none;
+    padding: 1.25rem 1.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.lifestat-navbar.has-results {
+    background: #111111 !important;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 5;
 }
 
 /* ── stat section ── */

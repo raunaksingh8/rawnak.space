@@ -4,18 +4,45 @@ const cors = require("cors");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const morgan = require("morgan");
+// const morgan = require("morgan");
+const ratelimit = require("express-rate-limit");
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV || "development"}`
 });
+
+//Rate Limits
+const globallimiter = ratelimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  handler: (req, res) => {
+    res.status(429).json({ message: "Too many requests from this IP, Please slow down" });
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const authlimiter = ratelimit({
+  windowMs: 10 * 60 * 1000,
+  max: 5,
+  handler: (req, res) => {
+    res.status(429).json({ message: "Too many attempts, try again after 10 minutes" });
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] logs -  ${req.method} ${req.url}`);
+  next();
+});
+
 
 app.use(cors({
   origin: [
@@ -34,7 +61,7 @@ app.get("/health", (req, res) => {
   res.send("Ok");
 })
 
-app.post("/api/auth/signup", async (req, res) => {
+app.post("/api/auth/signup", authlimiter, async (req, res) => {
   console.time("signup");
   const { name, email, password } = req.body;
 
@@ -65,7 +92,7 @@ app.post("/api/auth/signup", async (req, res) => {
   }
 })
 
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", authlimiter, async (req, res) => {
   console.time("login");
   const { email, password } = req.body;
   if (!email || !password) {
@@ -143,12 +170,6 @@ app.put("/api/since-when/:id", authMiddleware, async (req, res) => {
   }
 });
 
-app.use((req, res, next) => {
-  console.log(
-    `[${new Date().toISOString()}] ${req.method} ${req.url}`
-  );
-  next();
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

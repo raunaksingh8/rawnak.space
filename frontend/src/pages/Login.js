@@ -3,10 +3,10 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import '../styles/Login.css';
-import {VscEye,VscEyeClosed} from "react-icons/vsc";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import Loader from "../components/Loader"
 
-function Login({setToken}) {
+function Login({ setToken }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error] = useState('');
@@ -19,9 +19,9 @@ function Login({setToken}) {
 
     const handleLogin = async () => {
         if (!email || !password) {
-        toast.error("Please enter credentials !");
-        return;
-    }
+            toast.error("Please enter credentials !");
+            return;
+        }
         setLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
@@ -34,7 +34,8 @@ function Login({setToken}) {
             toast.success("Login Successfull !")
             navigate('/dashboard');
         } catch (err) {
-            toast.error(err.response.data.message);
+            const message = err.response?.data?.message || "Something went wrong, try again.";
+            toast.error(message);
         } finally {
             setLoading(false);
         }
@@ -42,35 +43,35 @@ function Login({setToken}) {
 
     return (
         <div className="loginpage">
-        <div className="login-container">
-            <h2>Login</h2>
-            {error && <p className="error">{error}</p>}
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-            />
-            <div className="password-wrapper">
+            <div className="login-container">
+                <h2>Login</h2>
+                {error && <p className="error">{error}</p>}
                 <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                 />
+                <div className="password-wrapper">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
 
-                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VscEyeClosed /> : <VscEye />}
-                </span>
+                    <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <VscEyeClosed /> : <VscEye />}
+                    </span>
+                </div>
+                <button onClick={handleLogin} disabled={loading}>Login
+                </button>
+                {loading && <Loader />}
+                <p>
+                    Don't have an account? <Link to="/signup">Sign up</Link>
+                </p>
+                <p className="p1"><Link to="/landingpage">Go Back</Link></p>
             </div>
-            <button onClick={handleLogin} disabled={loading}>Login
-            </button>
-            {loading && <Loader />}
-            <p>
-                Don't have an account? <Link to="/signup">Sign up</Link>
-            </p>
-            <p className="p1"><Link to="/landingpage">Go Back</Link></p>
-        </div>
         </div>
     );
 }

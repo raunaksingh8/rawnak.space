@@ -239,7 +239,7 @@ function LifeStats() {
 
     return (
         <div className="progress-page">
-            <nav className="lifestat-navbar">
+            <nav className={`lifestat-navbar ${life ? 'has-results' : ''}`}>
                 <div className="logo" aria-hidden="true"></div>
                 <Link to="/" className="progress-home" aria-label="Home">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
