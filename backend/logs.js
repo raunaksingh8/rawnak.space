@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const https = require("https");
 
 const API_KEY = process.env.RENDER_API_KEY;
@@ -9,7 +10,7 @@ if (!API_KEY || !SERVICE_ID || !OWNER_ID) {
     process.exit(1);
 }
 
-let lastTimestamp = new Date(Date.now() - 120000).toISOString();
+let lastTimestamp = new Date(Date.now() - 30000).toISOString();
 
 function stripAnsi(str) {
     return str.replace(/\u001b\[[0-9;]*m/g, "").trim();
