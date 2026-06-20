@@ -20,7 +20,7 @@ function fetchLogs() {
     const params = new URLSearchParams({
         resource: SERVICE_ID,
         ownerId: OWNER_ID,
-        start: lastTimestamp,
+        startTime: lastTimestamp, // ← fixed from "start" to "startTime"
     });
 
     const options = {
@@ -36,7 +36,6 @@ function fetchLogs() {
         res.on("data", (chunk) => (data += chunk));
         res.on("end", () => {
             try {
-                console.log("RAW RESPONSE:", data);
                 const json = JSON.parse(data);
                 if (json.logs && json.logs.length > 0) {
                     json.logs.forEach((log) => {
@@ -47,6 +46,7 @@ function fetchLogs() {
                         });
                         console.log(`[${time}] ${msg}`);
                     });
+                    // update to last log timestamp
                     lastTimestamp = json.logs[json.logs.length - 1].timestamp;
                 }
             } catch (err) {
