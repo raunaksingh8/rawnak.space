@@ -40,7 +40,11 @@ const pool = new Pool({
 
 // app.use(morgan("dev"));
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] logs -  ${req.method} ${req.url} ${res.statusCode} - ${Date.now() - start}ms - IP:${req.ip} `);
+  const start = Date.now();
+  res.on('finish', () => {
+    const ist = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+    console.log(`[${ist}] logs - ${req.method} ${req.url} ${res.statusCode} - ${Date.now() - start}ms - IP:${req.ip}`);
+  });
   next();
 });
 
