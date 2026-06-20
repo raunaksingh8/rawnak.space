@@ -1,8 +1,10 @@
 .progress-page {
     min-height: 100vh;
-    background: #FAFAFA;
+    background-color: #FAFAFA;
+    background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
     color: #111111;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -11,26 +13,43 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.25rem;
+    padding: 1.25rem 0.5rem;
     background: transparent;
-    box-shadow: none;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .progress-home {
-    background: transparent;
-    color: inherit;
+    background: white;
+    color: #111111;
     text-decoration: none;
     padding: 0;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border: 2.5px solid #111111;
+    border-radius: 50%;
+    box-shadow: 3.5px 3.5px 0 #111111;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.progress-home:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5.5px 5.5px 0 #111111;
+    background: #EF4444;
+    color: white;
 }
 
 .progress-home svg {
     display: block;
-    color: #111111;
+    color: currentColor;
+    transition: transform 0.2s ease;
+}
+
+.progress-home:hover svg {
+    transform: scale(1.1);
 }
 
 .progress-content {
@@ -282,77 +301,232 @@
 }
 
 .progress-list {
-    max-width: 920px;
-    margin: 0 auto 4rem;
+    max-width: 1200px;
+    margin: 0 auto 6rem;
     padding: 0 2rem;
     display: grid;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card variables for beautiful, custom neobrutalist look */
+.progress-item-minute {
+    --item-accent: #3B82F6;
+    --item-bg: #F0F6FF;
+}
+
+.progress-item-hour {
+    --item-accent: #6366F1;
+    --item-bg: #EEF2FF;
+}
+
+.progress-item-day {
+    --item-accent: #10B981;
+    --item-bg: #ECFDF5;
+}
+
+.progress-item-month {
+    --item-accent: #8B5CF6;
+    --item-bg: #F5F3FF;
+}
+
+.progress-item-year {
+    --item-accent: #EC4899;
+    --item-bg: #FDF2F8;
+}
+
+.progress-item-mothers-day {
+    --item-accent: #F43F5E;
+    --item-bg: #FFF1F2;
+}
+
+.progress-item-fathers-day {
+    --item-accent: #06B6D4;
+    --item-bg: #ECFEFF;
+}
+
+.progress-item-christmas {
+    --item-accent: #EF4444;
+    --item-bg: #FEF2F2;
+}
+
+.progress-item-holi {
+    --item-accent: #EAB308;
+    --item-bg: #FEF9C3;
+}
+
+.progress-item-diwali {
+    --item-accent: #F97316;
+    --item-bg: #FFF7ED;
+}
+
+.progress-item-durga-puja {
+    --item-accent: #D97706;
+    --item-bg: #FEF3C7;
+}
+
+.progress-item-decade {
+    --item-accent: #4B5563;
+    --item-bg: #F9FAFB;
+}
+
+.progress-item-century {
+    --item-accent: #374151;
+    --item-bg: #F3F4F6;
+}
+
+.progress-item-millennium {
+    --item-accent: #111827;
+    --item-bg: #F3F4F6;
+}
+
+.progress-item-page-end {
+    --item-accent: #14B8A6;
+    --item-bg: #F0FDFA;
+}
+
+[class*="progress-item-moon-"] {
+    --item-accent: #4F46E5;
+    --item-bg: #EEF2FF;
 }
 
 .progress-item {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: center;
-    padding: 1rem 1.25rem;
-    border: 2px solid #111111;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 8px 8px 0 rgba(17, 17, 17, 0.08);
+    padding: 1.25rem 1.5rem;
+    border: 2.5px solid #111111;
+    border-radius: 16px;
+    background: var(--item-bg, white);
+    box-shadow: 8px 8px 0 var(--item-accent, #111111);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-item:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 14px 14px 0 var(--item-accent, #111111);
 }
 
 .progress-item-emoji {
-    font-size: 1.75rem;
-    line-height: 1;
-    width: 2.5rem;
-    text-align: center;
+    font-size: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid #111111;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 3px 3px 0 #111111;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.progress-item:hover .progress-item-emoji {
+    transform: rotate(-8deg) scale(1.1);
 }
 
 .progress-item-copy {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.6rem;
 }
 
 .progress-item-label {
     color: #111111;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
 }
 
 .progress-item-value {
     color: #111111;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 900;
+    line-height: 1.2;
 }
 
 .progress-item-bar {
     width: 100%;
-    height: 10px;
-    background: #E5E7EB;
+    height: 15px;
+    background: #FFFFFF;
+    border: 2px solid #111111;
     border-radius: 999px;
     overflow: hidden;
+    position: relative;
 }
 
 .progress-item-bar-fill {
     height: 100%;
     width: 0;
-    background: #22c55e;
+    background: var(--item-accent, #22c55e);
     border-radius: 999px;
-    transition: width 0.15s ease;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-image: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent);
+    background-size: 1rem 1rem;
+    animation: progress-bar-stripes 1.199s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    0% {
+        background-position: 1rem 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .progress-list-hero {
-    max-width: 920px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 3rem 2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 0.5rem 1.5rem;
+    text-align: center;
 }
 
 .progress-list-hero h1 {
-    font-size: 2.8rem;
+    font-size: 3.6rem;
+    font-weight: 900;
     line-height: 1.05;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    position: relative;
+    display: inline-block;
+}
+
+.progress-list-hero h1::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 5%;
+    width: 90%;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 999px;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+.progress-list-subtitle {
+    font-size: 1.2rem;
+    color: #4B5563;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
 }
 
 
