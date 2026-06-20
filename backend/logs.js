@@ -36,6 +36,7 @@ function fetchLogs() {
         res.on("data", (chunk) => (data += chunk));
         res.on("end", () => {
             try {
+                console.log("RAW RESPONSE:", data);
                 const json = JSON.parse(data);
                 if (json.logs && json.logs.length > 0) {
                     json.logs.forEach((log) => {
