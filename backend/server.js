@@ -40,7 +40,7 @@ const pool = new Pool({
 
 // app.use(morgan("dev"));
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] logs -  ${req.method} ${req.url}`);
+  console.log(`[${new Date().toISOString()}] logs -  ${req.method} ${req.url} ${res.statusCode} - ${Date.now() - start}ms - IP:${req.ip} `);
   next();
 });
 
