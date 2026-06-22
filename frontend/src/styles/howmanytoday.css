@@ -1,0 +1,758 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════════════════
+   HOW MANY TODAY — India Stats Page
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Reset & base ── */
+.hmt-page {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+}
+
+/* ── Transparent Navbar ── */
+.hmt-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: transparent;
+}
+
+.hmt-home-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
+
+.hmt-home-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.08);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+}
+
+.hmt-home-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   FULLSCREEN LOADER
+   ═══════════════════════════════════════════════════════ */
+.hmt-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    gap: 2rem;
+}
+
+.hmt-loader-spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #FF9933;
+    border-bottom-color: #138808;
+    animation: hmtSpin 0.9s linear infinite;
+}
+
+@keyframes hmtSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hmt-loader-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+}
+
+.hmt-loader-bar {
+    width: 200px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.hmt-loader-bar-fill {
+    width: 40%;
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #FF9933, #fff, #138808);
+    animation: hmtBarSlide 1.2s ease-in-out infinite;
+}
+
+@keyframes hmtBarSlide {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(350%);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ERROR STATE
+   ═══════════════════════════════════════════════════════ */
+.hmt-error {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    gap: 1.25rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.hmt-error-emoji {
+    font-size: 4rem;
+    animation: hmtErrorShake 0.6s ease-in-out;
+}
+
+@keyframes hmtErrorShake {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(-12deg);
+    }
+
+    40% {
+        transform: rotate(12deg);
+    }
+
+    60% {
+        transform: rotate(-8deg);
+    }
+
+    80% {
+        transform: rotate(8deg);
+    }
+}
+
+.hmt-error-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.hmt-error-desc {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.hmt-retry-btn {
+    margin-top: 0.5rem;
+    padding: 0.85rem 2.5rem;
+    border: none;
+    border-radius: 60px;
+    background: linear-gradient(135deg, #FF9933, #e67300);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing: 0.02em;
+}
+
+.hmt-retry-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 30px rgba(255, 153, 51, 0.4);
+}
+
+.hmt-retry-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ═══════════════════════════════════════════════════════
+   STAT SECTIONS — full-screen
+   ═══════════════════════════════════════════════════════ */
+.hmt-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.6s ease;
+}
+
+/* ── Scroll reveal ── */
+.hmt-section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 700px;
+    width: 100%;
+}
+
+.hmt-section-inner.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Staggered child reveals ── */
+.hmt-section-inner .hmt-emoji {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    transition: opacity 0.5s 0.1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.5s 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hmt-section-inner .hmt-number-block {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hmt-section-inner .hmt-label {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hmt-section-inner .hmt-description {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hmt-section-inner .hmt-unit-badge {
+    opacity: 0;
+    transform: translateY(15px) scale(0.9);
+    transition: opacity 0.5s 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.5s 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hmt-section-inner.is-visible .hmt-emoji,
+.hmt-section-inner.is-visible .hmt-number-block,
+.hmt-section-inner.is-visible .hmt-label,
+.hmt-section-inner.is-visible .hmt-description,
+.hmt-section-inner.is-visible .hmt-unit-badge {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   EMOJI
+   ═══════════════════════════════════════════════════════ */
+.hmt-emoji {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    animation: hmtEmojiFloat 4s ease-in-out infinite;
+}
+
+@keyframes hmtEmojiFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+   NUMBER BLOCK — hollow outline + solid number
+   ═══════════════════════════════════════════════════════ */
+.hmt-number-block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Giant hollow outline text */
+.hmt-number-outline {
+    font-size: clamp(3.8rem, 11.3vw, 8.2rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
+    text-stroke: 2px rgba(255, 255, 255, 0.2);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: 100%;
+    text-align: center;
+}
+
+/* Solid readable number below */
+.hmt-number-solid {
+    font-size: clamp(2rem, 6.5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    margin-top: -0.5rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    max-width: 100%;
+    text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LABEL, DESCRIPTION, UNIT BADGE
+   ═══════════════════════════════════════════════════════ */
+.hmt-label {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.hmt-description {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 480px;
+    text-align: center;
+    line-height: 1.65;
+    margin-bottom: 1.75rem;
+}
+
+.hmt-unit-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.hmt-unit-badge::before {
+    content: '📏';
+    font-size: 0.9rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HERO SECTION (first section)
+   ═══════════════════════════════════════════════════════ */
+.hmt-hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #0a0a0a 0%, #1a1a2e 100%);
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hmt-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 153, 51, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(19, 136, 8, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hmt-hero-flag {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 2rem;
+    animation: hmtFlagPulse 3s ease-in-out infinite;
+}
+
+@keyframes hmtFlagPulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.hmt-flag-bar {
+    width: 40px;
+    height: 6px;
+    border-radius: 3px;
+}
+
+.hmt-flag-bar:nth-child(1) {
+    background: #FF9933;
+}
+
+.hmt-flag-bar:nth-child(2) {
+    background: #fff;
+}
+
+.hmt-flag-bar:nth-child(3) {
+    background: #138808;
+}
+
+.hmt-hero-title {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.hmt-hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 500px;
+    line-height: 1.6;
+    position: relative;
+}
+
+.hmt-hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: hmtHeroFade 2s ease-in-out infinite;
+}
+
+.hmt-hero-scroll-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.hmt-hero-scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    transform: rotate(45deg);
+    animation: hmtArrowBounce 2s ease-in-out infinite;
+}
+
+@keyframes hmtHeroFade {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes hmtArrowBounce {
+
+    0%,
+    100% {
+        transform: rotate(45deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(45deg) translateY(6px);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════ */
+.hmt-footer {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: #0a0a0a;
+}
+
+.hmt-footer-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.05em;
+}
+
+.hmt-footer-flag {
+    display: inline-flex;
+    gap: 4px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.hmt-footer-flag-bar {
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+.hmt-footer-flag-bar:nth-child(1) {
+    background: #FF9933;
+}
+
+.hmt-footer-flag-bar:nth-child(2) {
+    background: #fff;
+}
+
+.hmt-footer-flag-bar:nth-child(3) {
+    background: #138808;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Tablets ── */
+@media (max-width: 1024px) {
+
+    .hmt-section,
+    .hmt-hero {
+        padding: 5.5rem 1.75rem;
+    }
+}
+
+/* ── Small tablets / large phones ── */
+@media (max-width: 768px) {
+    .hmt-section {
+        padding: 5rem 1.5rem;
+    }
+
+    .hmt-emoji {
+        margin-bottom: 1rem;
+    }
+
+    .hmt-number-outline {
+        font-size: clamp(2.5rem, 9vw, 5.5rem);
+        -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+        text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+    }
+
+    .hmt-number-solid {
+        font-size: clamp(1.6rem, 5.5vw, 3rem);
+    }
+
+    .hmt-description {
+        max-width: 90%;
+    }
+
+    .hmt-navbar {
+        padding: 1rem 1.25rem;
+    }
+
+    .hmt-hero {
+        padding: 5rem 1.5rem;
+    }
+
+    .hmt-hero-flag {
+        margin-bottom: 1.5rem;
+    }
+
+    .hmt-flag-bar {
+        width: 32px;
+        height: 5px;
+    }
+
+    .hmt-loader-spinner {
+        width: 48px;
+        height: 48px;
+    }
+
+    .hmt-hero-scroll {
+        bottom: 2rem;
+    }
+}
+
+/* ── Phones ── */
+@media (max-width: 480px) {
+    .hmt-section {
+        padding: 4rem 1rem;
+    }
+
+    .hmt-hero {
+        padding: 4rem 1.25rem;
+    }
+
+    .hmt-number-solid {
+        font-size: clamp(1.3rem, 5vw, 2.2rem);
+        margin-top: -0.25rem;
+    }
+
+    .hmt-number-outline {
+        font-size: clamp(2rem, 8.5vw, 3.8rem);
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
+        text-stroke: 1px rgba(255, 255, 255, 0.16);
+    }
+
+    .hmt-label {
+        letter-spacing: 0.08em;
+    }
+
+    .hmt-description {
+        max-width: 100%;
+        line-height: 1.55;
+    }
+
+    .hmt-unit-badge {
+        padding: 0.45rem 1rem;
+        font-size: 0.78rem;
+    }
+
+    .hmt-home-link {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hmt-home-link svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .hmt-navbar {
+        padding: 0.85rem 1rem;
+    }
+
+    .hmt-flag-bar {
+        width: 26px;
+        height: 4px;
+    }
+
+    .hmt-footer {
+        padding: 3rem 1.25rem;
+    }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 360px) {
+
+    .hmt-section,
+    .hmt-hero {
+        padding: 3.5rem 0.85rem;
+    }
+
+    .hmt-number-outline {
+        font-size: clamp(1.6rem, 8vw, 2.8rem);
+    }
+
+    .hmt-number-solid {
+        font-size: clamp(3rem, 5vw, 2rem);
+    }
+
+    .hmt-hero-title {
+        font-size: clamp(1.5rem, 7vw, 2.5rem);
+    }
+}
+
+/* ── Short / landscape viewports ── */
+@media (max-height: 600px) and (orientation: landscape) {
+
+    .hmt-section,
+    .hmt-hero {
+        min-height: auto;
+        padding: 6rem 2rem 3rem;
+    }
+
+    .hmt-emoji {
+        margin-bottom: 0.5rem;
+    }
+
+    .hmt-hero-scroll {
+        display: none;
+    }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+    .hmt-emoji,
+    .hmt-hero-flag,
+    .hmt-hero-scroll,
+    .hmt-hero-scroll-arrow,
+    .hmt-loader-spinner,
+    .hmt-loader-bar-fill,
+    .hmt-error-emoji {
+        animation: none !important;
+    }
+
+    .hmt-section-inner,
+    .hmt-section-inner .hmt-emoji,
+    .hmt-section-inner .hmt-number-block,
+    .hmt-section-inner .hmt-label,
+    .hmt-section-inner .hmt-description,
+    .hmt-section-inner .hmt-unit-badge {
+        transition: none !important;
+    }
+}

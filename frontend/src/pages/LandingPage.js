@@ -8,20 +8,34 @@ function LandingPage() {
 
 
     const cards = [
+        { image: "/images/howmanytoday.svg", route: "/howmanytoday" },
         { image: "/images/sincewhen.svg", route: "/since-when" },
         { image: "/images/lifestats.svg", route: "/lifestats" },
         { image: "/images/dowrycal.svg", route: "/dowrycal" },
         { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
         { image: "/images/moneyspent.svg", route: "/moneyspent" },
         { image: "/images/progress.svg", route: "/progress" },
+        { image: "/images/birthheatmap.svg", route: "/birthheatmap" },
         { image: "/images/share.svg", route: "/share" },
-        { image: "/images/birthheatmap.svg", route: "/birthheatmap" }
     ];
 
 
     const [isLeaving, setIsLeaving] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
+    const [darkMode, setDarkMode] = useState(() => localStorage.theme === 'dark');
 
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', localStorage.theme || 'light');
+    }, []);
+
+    const toggleTheme = () => {
+        setDarkMode(prev => {
+            const next = !prev;
+            document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
+            localStorage.theme = next ? 'dark' : 'light';
+            return next;
+        });
+    };
 
 
 
@@ -80,14 +94,40 @@ function LandingPage() {
             <div className="emoji-border right"></div>
 
 
-            {/* <nav className="navbar">
-                <div className="logo" aria-hidden="true"></div>
-                <div className="nav-links">
+            <nav className="navbar">
+                <div className="theme-switcher">
+                    {/* <span className="theme-icon">☀️</span> */}
+                    <button
+                        className={`track-toggle ${darkMode ? 'on' : ''}`}
+                        onClick={toggleTheme}
+                        aria-label="Toggle dark mode"
+                    >
+                        <div className="track-thumb">
+                            <span className="thumb-icon">{darkMode ? '☀️' : '🌙'}</span>
+                        </div>
+                    </button>
+                    {/* <span className="theme-icon">🌙</span> */}
+                </div>
+                {/* <div className="logo" aria-hidden="true"></div> */}
+                {/* <div className="nav-links">
                     <Link to="/login" className="btn-signup">Login</Link>
                     <Link to="/signup" className="btn-signup">Sign Up</Link>
-                </div>
-            </nav> */}
+                </div> */}
+            </nav>
 
+            <div className="site-title">
+                <span className="word-group">
+                    {['r', 'a', 'w', 'n', 'a', 'k'].map((ch, i) => (
+                        <span key={i} className="letter raunak-letter" style={{ '--i': i }}>{ch}</span>
+                    ))}
+                </span>
+                <span className="letter dot-letter" style={{ '--i': 0 }}>.</span>
+                <span className="word-group">
+                    {['s', 'p', 'a', 'c', 'e'].map((ch, i) => (
+                        <span key={i} className="letter space-letter" style={{ '--i': i }}>{ch}</span>
+                    ))}
+                </span>
+            </div>
 
             <div className={`landing-intro ${isLeaving ? 'is-leaving' : ''}`}>
                 <div className="card-container">

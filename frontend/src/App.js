@@ -17,6 +17,7 @@ import Share from './pages/Share';
 import SinceWhen from './pages/sincewhen';
 import Admin from './pages/Admin';
 import BirthHeatmap from './pages/birthheatmap';
+import HowManyToday from './pages/howmanytoday';
 
 function RouteTitleUpdater() {
     const location = useLocation();
@@ -35,7 +36,8 @@ function RouteTitleUpdater() {
             '/share': 'Share',
             '/since-when': 'Since When',
             '/admin': 'Admin',
-            '/birthheatmap': 'India Live Birth Counter'
+            '/birthheatmap': 'India Live Birth Counter',
+            '/howmanytoday': 'How Many Today'
         };
 
         document.title = routeTitles[location.pathname] || 'Fullstack';
@@ -96,6 +98,7 @@ function App() {
                 <Route path="/since-when" element={<SinceWhen />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/birthheatmap" element={<BirthHeatmap />} />
+                <Route path="/howmanytoday" element={<HowManyToday />} />
                 <Route
                     path="*"
                     element={

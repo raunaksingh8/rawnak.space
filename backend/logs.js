@@ -83,7 +83,7 @@ function scheduleNext() {
     setTimeout(fetchLogs, pollInterval);
 }
 
-console.log("🚀 Streaming Render production logs (Ctrl+C to stop)...\n");
+console.log("Streaming Live production logs...\n");
 
 // Wait 5s before first fetch to let any rate limit cool down
 setTimeout(fetchLogs, 5000);

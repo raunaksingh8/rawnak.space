@@ -175,6 +175,20 @@ app.put("/api/since-when/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// how many today API
+
+app.get("/api/howmanytoday", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "select slug,value,unit FROM  how_many_today order by id"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Failed to fetch howmanytoday:", err);
+    res.status(500).json({ message: "Failed to fetch stats" })
+  }
+})
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
