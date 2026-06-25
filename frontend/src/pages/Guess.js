@@ -238,7 +238,7 @@ export default function GuessTheLength() {
             console.error(err);
 
             setError(
-                "Could not load specimens. Please try again."
+                "Could not load the guess game. Please try again."
             );
         } finally {
             setLoading(false);
@@ -302,6 +302,12 @@ export default function GuessTheLength() {
                             onClick={loadSpecimens}
                         >
                             Retry
+                        </button>
+                        <button
+                            className="check-btn"
+                            onClick={() => navigate("/")}
+                        >
+                            Back to Home
                         </button>
                     </div>
                 </div>

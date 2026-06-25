@@ -9,8 +9,8 @@ function LandingPage() {
 
     const cards = [
         { image: "/images/guess.svg", route: "/Guess" },
-        { image: "/images/howmanytoday.svg", route: "/howmanytoday" },
         { image: "/images/sincewhen.svg", route: "/since-when" },
+        { image: "/images/howmanytoday.svg", route: "/howmanytoday" },
         { image: "/images/lifestats.svg", route: "/lifestats" },
         { image: "/images/dowrycal.svg", route: "/dowrycal" },
         { image: "/images/fcbarcelona.svg", route: "/fcbarcelona" },
