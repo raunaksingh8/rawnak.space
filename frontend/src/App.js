@@ -18,6 +18,7 @@ import SinceWhen from './pages/sincewhen';
 import Admin from './pages/Admin';
 import BirthHeatmap from './pages/birthheatmap';
 import HowManyToday from './pages/howmanytoday';
+import GuessTheLength from './pages/Guess';
 
 function RouteTitleUpdater() {
     const location = useLocation();
@@ -37,7 +38,8 @@ function RouteTitleUpdater() {
             '/since-when': 'Since When',
             '/admin': 'Admin',
             '/birthheatmap': 'India Live Birth Counter',
-            '/howmanytoday': 'How Many Today'
+            '/howmanytoday': 'How Many Today',
+            '/Guess': 'Guess The Length'
         };
 
         document.title = routeTitles[location.pathname] || 'Fullstack';
@@ -85,7 +87,7 @@ function App() {
                     path='/dashboard'
                     element={
                         token
-                            ? <Dashboard setToken={setToken}/>
+                            ? <Dashboard setToken={setToken} />
                             : <Navigate to="/" />
                     }
                 />
@@ -99,6 +101,7 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/birthheatmap" element={<BirthHeatmap />} />
                 <Route path="/howmanytoday" element={<HowManyToday />} />
+                <Route path="/Guess" element={<GuessTheLength />} />
                 <Route
                     path="*"
                     element={
@@ -108,7 +111,7 @@ function App() {
                     }
                 />
             </Routes>
-            <Analytics/>
+            <Analytics />
         </BrowserRouter>
     );
 }

@@ -8,6 +8,7 @@ function LandingPage() {
 
 
     const cards = [
+        { image: "/images/guess.svg", route: "/Guess" },
         { image: "/images/howmanytoday.svg", route: "/howmanytoday" },
         { image: "/images/sincewhen.svg", route: "/since-when" },
         { image: "/images/lifestats.svg", route: "/lifestats" },
