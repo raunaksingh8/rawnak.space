@@ -312,7 +312,7 @@ function Progress() {
 
             <main className="progress-content">
                 <section className="progress-list-hero">
-                    <h1>Progress </h1>
+                    <h1>Progress !!!</h1>
                     <p className="progress-list-subtitle">Tracking the passage of time and cosmic cycles in real-time.</p>
                 </section>
 
