@@ -25,7 +25,7 @@ function RouteTitleUpdater() {
 
     useEffect(() => {
         const routeTitles = {
-            '/': 'Home',
+            '/': 'rawnak.space',
             '/login': 'Login',
             '/signup': 'Sign Up',
             '/dashboard': 'Dashboard',
