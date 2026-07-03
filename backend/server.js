@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  console.log("Health Check Ping");
+  console.log("Health Check Ping - ");
   res.send("Ok");
 });
 
