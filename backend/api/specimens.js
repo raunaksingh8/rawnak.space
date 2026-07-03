@@ -2,15 +2,34 @@ const pool = require("../db");
 
 module.exports = (app) => {
 
-    // GET /api/specimens
     app.get("/api/specimens", async (req, res) => {
         try {
-            const result = await pool.query("SELECT * FROM specimens ORDER BY id");
-            res.json(result.rows);
+            const result = await pool.query(
+                "Select * from specimens  order by id"
+            )
+            if (result.rows.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    status: 404,
+                    message: "No data found"
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                status: 200,
+                message: "Data fetched successfully",
+                data: result.rows
+            })
         } catch (err) {
-            console.error("Failed to fetch specimens", err);
-            res.status(500).json({ message: "Failed to fetch specimens" });
+            console.log(err)
+            return res.status(500).json({
+                success: false,
+                status: 500,
+                message: "Internal server error",
+            });
         }
     });
+
+
 
 };

@@ -11,7 +11,7 @@ const { globallimiter } = require("./middleware/rateLimiters");
 const app = express();
 app.set('trust proxy', 1);
 
-// ─── Core Middleware ───
+// Core Middleware 
 app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
@@ -30,7 +30,7 @@ app.use(cors({
 app.use(express.json());
 app.use(globallimiter);
 
-// ─── Health / Root ───
+// Health Check
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
@@ -40,13 +40,12 @@ app.get("/health", (req, res) => {
   res.send("Ok");
 });
 
-// ─── API Routes ───
-// each file receives `app` and registers its own app.get/app.post/app.put routes
+//  API Routes 
 require("./api/auth")(app);
 require("./api/sinceWhen")(app);
 require("./api/howManyToday")(app);
 require("./api/specimens")(app);
 
-// ─── Start Server ───
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
