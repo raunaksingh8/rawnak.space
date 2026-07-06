@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../styles/LandingPage.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 
 function LandingPage() {
+    useTrackView("LandingPage");
     const navigate = useNavigate();
 
 

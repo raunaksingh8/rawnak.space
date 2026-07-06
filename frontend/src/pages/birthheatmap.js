@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/birthheatmap.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const BIRTH_INTERVAL = 1280;
 const BLINK_DURATION = 900;
@@ -47,6 +48,9 @@ const STATE_WEIGHTS = {
 
 /* ─── Helpers ─── */
 function buildWeightedPool(geojsonFeatures) {
+
+
+
     const pool = [];
     const features = Array.isArray(geojsonFeatures) ? geojsonFeatures : (geojsonFeatures?.features || []);
     features.forEach((feature) => {
@@ -75,6 +79,9 @@ function formatTimer(seconds) {
 
 /* ─── Main Component ─── */
 export default function BirthHeatmap() {
+
+    useTrackView("BirthHeatmap");
+
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
 

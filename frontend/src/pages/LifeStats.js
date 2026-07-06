@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Progress.css';
 import '../styles/lifestats.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const SECOND = 1000;
 const DAY = 24 * 60 * 60 * SECOND;
@@ -124,6 +125,9 @@ function StatSection({ children, className = '' }) {
 
 /* ── Main component ── */
 function LifeStats() {
+
+    useTrackView("LifeStats");
+
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');

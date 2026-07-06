@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/DowryCal.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 export default function DowryForm() {
+
+  useTrackView("DowryForm");
+
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [religion, setReligion] = useState('');
@@ -10,7 +14,7 @@ export default function DowryForm() {
   const [submitted, setSubmitted] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const [profession, setProfession] = useState('');
-const [education, setEducation] = useState('');
+  const [education, setEducation] = useState('');
 
   const ANNUAL = 18787.9;
   const perSec = ANNUAL / (365 * 24 * 3600);
@@ -84,94 +88,94 @@ const [education, setEducation] = useState('');
 
         {/* ── FORM ── */}
         {!submitted && (
-  <div className="dc-card" role="region" aria-labelledby="form-title">
-    <div className="dc-card-header">
-      <h1 id="form-title">Dowry calculator</h1>
-      <p>Enter to calculate your dowry.</p>
-    </div>
-    <form className="dc-form-body" onSubmit={handleSubmit}>
+          <div className="dc-card" role="region" aria-labelledby="form-title">
+            <div className="dc-card-header">
+              <h1 id="form-title">Dowry calculator</h1>
+              <p>Enter to calculate your dowry.</p>
+            </div>
+            <form className="dc-form-body" onSubmit={handleSubmit}>
 
-      <div className="dc-field">
-        <label htmlFor="dc-name">Your name</label>
-        <input
-          id="dc-name"
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-        />
-      </div>
+              <div className="dc-field">
+                <label htmlFor="dc-name">Your name</label>
+                <input
+                  id="dc-name"
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-      <div className="dc-field-row">
-        <div className="dc-field">
-          <label htmlFor="dc-age">Age</label>
-          <input
-            id="dc-age"
-            type="number"
-            min="1"
-            max="120"
-            value={age}
-            onChange={e => setAge(e.target.value)}
-            required
-          />
-        </div>
-        <div className="dc-field">
-          <label htmlFor="dc-religion">Religion</label>
-          <select id="dc-religion" value={religion} onChange={e => setReligion(e.target.value)}>
-            <option value="">Select</option>
-            <option>Hindu</option>
-            <option>Muslim</option>
-            <option>Christian</option>
-            <option>Sikh</option>
-            <option>Buddhist</option>
-            <option>Jain</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
+              <div className="dc-field-row">
+                <div className="dc-field">
+                  <label htmlFor="dc-age">Age</label>
+                  <input
+                    id="dc-age"
+                    type="number"
+                    min="1"
+                    max="120"
+                    value={age}
+                    onChange={e => setAge(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="dc-field">
+                  <label htmlFor="dc-religion">Religion</label>
+                  <select id="dc-religion" value={religion} onChange={e => setReligion(e.target.value)}>
+                    <option value="">Select</option>
+                    <option>Hindu</option>
+                    <option>Muslim</option>
+                    <option>Christian</option>
+                    <option>Sikh</option>
+                    <option>Buddhist</option>
+                    <option>Jain</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
 
-      <div className="dc-field-row">
-        <div className="dc-field">
-          <label htmlFor="dc-profession">Profession</label>
-          <select id="dc-profession" value={profession} onChange={e => setProfession(e.target.value)} required>
-            <option value="">Select</option>
-            <option>Entrepreneur</option>
-            <option>Engineer</option>
-            <option>Doctor</option>
-            <option>Investment Banker</option>
-            <option>Brand Manager</option>
-            <option>Product Manager</option>
-            <option>Content Creator</option>
-            <option>Others</option>
-          </select>
-        </div>
-        <div className="dc-field">
-          <label htmlFor="dc-education">Education</label>
-          <select id="dc-education" value={education} onChange={e => setEducation(e.target.value)} required>
-            <option value="">Select</option>
-            <option>High School</option>
-            <option>Graduation</option>
-            <option>Post Graduation</option>
-            <option>PhD</option>
-            <option>Dropout</option>
-          </select>
-        </div>
-      </div>
+              <div className="dc-field-row">
+                <div className="dc-field">
+                  <label htmlFor="dc-profession">Profession</label>
+                  <select id="dc-profession" value={profession} onChange={e => setProfession(e.target.value)} required>
+                    <option value="">Select</option>
+                    <option>Entrepreneur</option>
+                    <option>Engineer</option>
+                    <option>Doctor</option>
+                    <option>Investment Banker</option>
+                    <option>Brand Manager</option>
+                    <option>Product Manager</option>
+                    <option>Content Creator</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                <div className="dc-field">
+                  <label htmlFor="dc-education">Education</label>
+                  <select id="dc-education" value={education} onChange={e => setEducation(e.target.value)} required>
+                    <option value="">Select</option>
+                    <option>High School</option>
+                    <option>Graduation</option>
+                    <option>Post Graduation</option>
+                    <option>PhD</option>
+                    <option>Dropout</option>
+                  </select>
+                </div>
+              </div>
 
-      <div className="dc-field">
-        <label htmlFor="dc-salary">Monthly income</label>
-        <select id="dc-salary" value={salary} onChange={e => setSalary(e.target.value)}>
-             <option value="">Select</option>
-          <option>Below ₹50,000</option>
-          <option>₹50,000 - ₹1,00,000</option>
-          <option>Above ₹1,00,000</option>
-        </select>
-      </div>
+              <div className="dc-field">
+                <label htmlFor="dc-salary">Monthly income</label>
+                <select id="dc-salary" value={salary} onChange={e => setSalary(e.target.value)}>
+                  <option value="">Select</option>
+                  <option>Below ₹50,000</option>
+                  <option>₹50,000 - ₹1,00,000</option>
+                  <option>Above ₹1,00,000</option>
+                </select>
+              </div>
 
-      <button type="submit" className="dc-submit-btn">Calculate</button>
-    </form>
-  </div>
-)}
+              <button type="submit" className="dc-submit-btn">Calculate</button>
+            </form>
+          </div>
+        )}
 
         {/* ── RESULT ── */}
         {submitted && (
@@ -184,9 +188,9 @@ const [education, setEducation] = useState('');
                 women are losing their lives to dowry.
               </h2>
               <p>
-                Based on reported dowry deaths in India each year - 
+                Based on reported dowry deaths in India each year -
                 <strong> 1 woman dies every 28 minutes</strong>. The real number is believed to be <strong>
-                 far higher </strong> .
+                  far higher </strong> .
               </p>
             </div>
 

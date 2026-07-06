@@ -45,6 +45,7 @@ require("./api/auth")(app);
 require("./api/sinceWhen")(app);
 require("./api/howManyToday")(app);
 require("./api/specimens")(app);
+require("./api/track")(app);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

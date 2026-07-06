@@ -5,10 +5,12 @@ import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 import Loader from '../components/Loader';
 import '../styles/Login.css';
 import '../styles/Admin.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Admin() {
+    useTrackView("Admin");
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
         return localStorage.getItem('adminLoggedIn') === 'true';
     });

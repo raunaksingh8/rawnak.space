@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../styles/Dashboard.css';
+import { useTrackView } from '../hooks/useTrackView';
 
-function Dashboard({setToken}) {
+function Dashboard({ setToken }) {
+
+    useTrackView("Dashboard");
+
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
 

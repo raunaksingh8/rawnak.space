@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Progress.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -205,6 +206,9 @@ function getMoonPhaseTargets(now) {
 }
 
 function Progress() {
+
+    useTrackView("Progress");
+
     const [now, setNow] = useState(new Date());
     const [pagePixelsLeft, setPagePixelsLeft] = useState(0);
 

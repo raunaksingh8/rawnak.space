@@ -4,9 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import '../styles/Login.css';
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import Loader from "../components/Loader"
+import Loader from "../components/Loader";
+import { useTrackView } from "../hooks/useTrackView";
 
 function Login({ setToken }) {
+
+    useTrackView("Login");
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error] = useState('');

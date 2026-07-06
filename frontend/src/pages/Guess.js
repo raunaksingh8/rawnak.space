@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/Guess.css";
+import { useTrackView } from "../hooks/useTrackView";
 
 const API_URL =
     process.env.REACT_APP_API_URL || "http://localhost:3001";
@@ -144,6 +145,9 @@ function triggerConfetti() {
 }
 
 export default function GuessTheLength() {
+
+    useTrackView("GuessTheLength");
+
     const [specimens, setSpecimens] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");

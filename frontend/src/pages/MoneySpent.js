@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import '../styles/Moneyspent.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const ENTRIES = [
+
   { id: 'teacher-india', label: 'Teacher', rate: 300 },
   { id: 'software-engineer-india', label: 'Software Engineer', rate: 600 },
   { id: 'doctor-india', label: 'Doctor', rate: 1000 },
@@ -12,7 +14,7 @@ const ENTRIES = [
   { id: 'gautam-adani', label: 'Gautam Adani', rate: 40000000 },
   { id: 'mukesh-ambani', label: 'Mukesh Ambani', rate: 80000000 },
   { id: 'india-military-expenditure', label: 'India Military Expenditure', rate: 890000000 },
-  
+
 ];
 
 const BILL_VALUE = 500;
@@ -138,6 +140,9 @@ function MoneyRow({ entry, customRate, onCustomRateChange }) {
 }
 
 function MoneySpent() {
+
+  useTrackView("MoneySpent");
+
   const [customRate, setCustomRate] = useState('');
 
   return (

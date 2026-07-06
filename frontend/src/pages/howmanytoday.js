@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/howmanytoday.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -178,6 +179,9 @@ function StatSection({ stat, meta }) {
    HowManyToday — Main page component
    ═══════════════════════════════════════════════════════ */
 function HowManyToday() {
+
+    useTrackView("HowManyToday");
+
     const [stats, setStats] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

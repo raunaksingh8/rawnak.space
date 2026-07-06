@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/sincewhen.css';
+import { useTrackView } from '../hooks/useTrackView';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -156,6 +157,9 @@ function EventCard({ event, index }) {
 /* ───── Main Page ───── */
 
 function SinceWhen() {
+
+    useTrackView("SinceWhen");
+
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
