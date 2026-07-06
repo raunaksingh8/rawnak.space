@@ -165,7 +165,7 @@ function SinceWhen() {
             const res = await fetch(`${API_URL}/api/since-when`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
-            setEvents(data || []);
+            setEvents(data.data || []); // ✅ unwrap the { success, data } envelope
             setError(null);
         } catch (err) {
             console.error('Failed to fetch since_when events:', err);

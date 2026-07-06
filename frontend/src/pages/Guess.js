@@ -214,7 +214,8 @@ export default function GuessTheLength() {
                 throw new Error("Failed to load specimens");
             }
 
-            const rows = await response.json();
+            const result = await response.json();
+            const rows = result.data;
 
             if (!rows?.length) {
                 throw new Error("No specimens found");

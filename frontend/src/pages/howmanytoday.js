@@ -189,7 +189,7 @@ function HowManyToday() {
             const res = await fetch(`${API_URL}/api/howmanytoday`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
-            setStats(data);
+            setStats(data.data || []);
         } catch (err) {
             console.error('Failed to fetch howmanytoday:', err);
             setError(err.message || 'Something went wrong');
